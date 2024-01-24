@@ -17,7 +17,7 @@ public class TunerConstants {
         .withKS(1).withKV(0).withKA(0); */
         //.withKP(.2).withKI(0).withKD(.1)
         //.withKS(0).withKV(0).withKA(0); 
-        .withKP(-75).withKI(0).withKD(-1)
+        .withKP(75).withKI(0).withKD(1)
         .withKS(0).withKV(0).withKA(0);
     // When using closed-loop control, the drive motor uses:
     // - VelocityVoltage, if DrivetrainConstants.SupportsPro is false (default)

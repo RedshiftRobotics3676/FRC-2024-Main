@@ -73,6 +73,9 @@ public class Telemetry {
                     .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
     };
 
+//     StructArrayPublisher<SwerveModuleState> publisher = NetworkTableInstance.getDefault()
+//         .getStructArrayTopic("SwerveModuleStates", SwerveModuleState.struct).publish();
+
     /* Accept the swerve drive state and telemeterize it to smartdashboard */
     public void telemeterize(SwerveDriveState state) {
         /* Telemeterize the pose */
@@ -106,5 +109,9 @@ public class Telemetry {
 
             SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
         }
-    }
+
+        
+
+        // publisher.set(state.ModuleStates);
+    }    
 }

@@ -15,6 +15,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    // Pathfinding.setPathfinder(new LocalADStarAK());
     m_robotContainer = new RobotContainer();
   }
 
