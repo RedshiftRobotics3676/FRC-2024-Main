@@ -7,33 +7,28 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackTy
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 
 import edu.wpi.first.math.util.Units;
-// import frc.robot.CommandSwerveDrivetrain;
 
 public class TunerConstants {
     // Both sets of gains need to be tuned to your individual robot
     // The steer motor uses MotionMagicVoltage control
     public static final Slot0Configs steerGains = new Slot0Configs()
-        /* .withKP(0.3).withKI(0).withKD(0.5)
-        .withKS(1).withKV(0).withKA(0); */
-        //.withKP(.2).withKI(0).withKD(.1)
-        //.withKS(0).withKV(0).withKA(0); 
         .withKP(75).withKI(0).withKD(1)
         .withKS(0).withKV(0).withKA(0);
+
     // When using closed-loop control, the drive motor uses:
     // - VelocityVoltage, if DrivetrainConstants.SupportsPro is false (default)
     // - VelocityTorqueCurrentFOC, if DrivetrainConstants.SupportsPro is true
     public static final Slot0Configs driveGains = new Slot0Configs() //TODO find drive pids maybe?
-        //.withKP(3).withKI(0).withKD(0)
-        //.withKS(0).withKV(0).withKA(0);
-        .withKP(0.2).withKI(0).withKD(0)
-        .withKS(0).withKV(0).withKA(0);
+        .withKP(0.2).withKI(0.0).withKD(0.0)
+        .withKS(0.0).withKV(0.0).withKA(0.0);
+
     // The stator current at which the wheels start to slip;
     // This needs to be tuned to your individual robot
     public static final double kSlipCurrentA = 300.0;
 
     // Theoretical free speed (m/s) at 12v applied output;
     // This needs to be tuned to your individual robot
-    public static final double kSpeedAt12VoltsMps = 6.0;
+    public static final double kSpeedAt12VoltsMps = 5.54736;
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
     // This may need to be tuned to your individual robot

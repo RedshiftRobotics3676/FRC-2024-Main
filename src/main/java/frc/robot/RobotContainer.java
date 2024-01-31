@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import java.util.Arrays;
-
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -38,11 +36,11 @@ public class RobotContainer {
    * 
    * <p> The default value is pi radians per second
    */
-  final double MaxAngularRate =  3*Math.PI/2; //default - pi = Half a rotation per second max angular velocity
+  final double MaxAngularRate = 2*Math.PI; //default - pi = Half a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   CommandXboxController joystick = new CommandXboxController(0); // My joystick
-  CommandSwerveDrivetrain drivetrain = new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft,
+  public CommandSwerveDrivetrain drivetrain = new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft,
   TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight); // My drivetrain
   // SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withIsOpenLoop(true/* default - true */); // I want field-centric
   //                                                                                           // driving in open loop
@@ -55,13 +53,15 @@ public class RobotContainer {
   Limelight limelight = new Limelight();
   Music music = new Music(drivetrain);
 
+  SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
+  SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
+
   // Build an auto chooser. This will use Commands.none() as the default option.
-  private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
+  private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser("3m forward auto");
 
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
-                                                                                           // negative Y (forward)
+        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
             .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
             .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
@@ -78,7 +78,7 @@ public class RobotContainer {
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-      SmartDashboard.putString("states", Arrays.toString(drivetrain.getState().ModuleStates));
+      // SmartDashboard.putString("states", Arrays.toString(drivetrain.getState().ModuleStates));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
   }
