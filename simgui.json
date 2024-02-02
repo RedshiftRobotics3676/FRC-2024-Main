@@ -1,5 +1,19 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "columns": 300,
+        "serpentine": true
+      },
+      "window": {
+        "visible": true
+      }
+    },
+    "Other Devices": {
+      "window": {
+        "visible": false
+      }
+    },
     "Timing": {
       "window": {
         "visible": false
@@ -18,6 +32,11 @@
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     },
     "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Pose": {
         "bottom": 544,
         "builtin": "2024 Crescendo",

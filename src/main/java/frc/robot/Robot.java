@@ -21,6 +21,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    // m_robotContainer.leds.rainbow();
+    m_robotContainer.leds.pulseAllianceColor();
+    // m_robotContainer.leds.updateLEDs();
   }
 
   @Override
