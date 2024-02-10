@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.CommandSwerveDrivetrain;
+import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.LEDs;
 import frc.robot.Subsystems.Limelight;
 import frc.robot.Subsystems.Music;
@@ -45,7 +47,7 @@ public class RobotContainer {
   TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight); // My drivetrain
   // SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withIsOpenLoop(true/* default - true */); // I want field-centric
   //                                                                                           // driving in open loop
-  SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric();
+  SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withDeadband(0.07);
   SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   // SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt().withIsOpenLoop(false);
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -54,6 +56,8 @@ public class RobotContainer {
   Limelight limelight = new Limelight();
   Music music = new Music(drivetrain);
   LEDs leds = new LEDs();
+  // Arm arm = new Arm();
+  // Intake intake = new Intake();
 
   SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
   SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
@@ -68,6 +72,8 @@ public class RobotContainer {
             .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
+    // arm.setDefaultCommand(arm.setArmSpeed(joystick.getRightTriggerAxis() - joystick.getLeftTriggerAxis()));
+
     joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
     joystick.b().whileTrue(drivetrain // Not running continuously correctly? only when button is pressed ocne not held
         .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
@@ -77,6 +83,9 @@ public class RobotContainer {
 
     joystick.y().onTrue(music.loadFromChooser());
     joystick.x().onTrue(music.playOrPause());
+
+    // // joystick.rightTrigger(.2).whileTrue(arm.setArmSpeed(joystick.getRightTriggerAxis()));
+    // joystick.start().whileTrue(intake.shoot());
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
