@@ -65,11 +65,15 @@ public class RobotContainer {
   // Build an auto chooser. This will use Commands.none() as the default option.
   private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser("3m forward auto");
 
+  private double squareInputs(double input) {
+    return Math.pow(input, 2) * Math.signum(input);
+  }
+
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        drivetrain.applyRequest(() -> drive.withVelocityX(squareInputs(-joystick.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
+            .withVelocityY(squareInputs(-joystick.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(squareInputs(-joystick.getRightX()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
     // arm.setDefaultCommand(arm.setArmSpeed(joystick.getRightTriggerAxis() - joystick.getLeftTriggerAxis()));

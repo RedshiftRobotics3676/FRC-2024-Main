@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -24,6 +25,8 @@ public class Robot extends TimedRobot {
     // m_robotContainer.leds.rainbow();
     m_robotContainer.leds.pulseAllianceColor();
     // m_robotContainer.leds.updateLEDs();
+    SmartDashboard.putNumber("FL Module rotation?",m_robotContainer.drivetrain.getModule(0).getPosition(true).angle.getRotations());
+    m_robotContainer.drivetrain.getModule(0).getPosition(true).angle.getDegrees();
   }
 
   @Override

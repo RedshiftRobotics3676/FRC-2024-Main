@@ -38,9 +38,9 @@ public class TunerConstants {
     public static final double kSteerGearRatio = 21.428571428571427;
     public static final double kWheelRadiusInches = 2;
 
-    public static final boolean kSteerMotorReversed = false;
-    public static final boolean kInvertLeftSide = false;
-    public static final boolean kInvertRightSide = true;
+    public static final boolean kSteerMotorReversed = true;//false;
+    public static final boolean kInvertLeftSide = false;//false;
+    public static final boolean kInvertRightSide = true;//true;
 
     public static final String kCANbusName = "";
     public static final int kPigeonId = 1;

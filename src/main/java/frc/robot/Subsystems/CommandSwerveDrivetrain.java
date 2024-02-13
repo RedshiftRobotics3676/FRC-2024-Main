@@ -1,12 +1,13 @@
 package frc.robot.Subsystems;
 
+import frc.robot.generated.TunerConstants;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -38,17 +39,27 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
 
-        for (SwerveModule module : super.Modules) {
-            module.getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.Clockwise_Positive));
-        }
+        // for (SwerveModule module : super.Modules) {
+        //     module.getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive));
+        // }
+
+        Modules[0].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kFrontLeftEncoderOffset));
+        Modules[1].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kFrontRightEncoderOffset));
+        Modules[2].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kBackLeftEncoderOffset));
+        Modules[3].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kBackRightEncoderOffset));
     }
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
 
-        for (SwerveModule module : super.Modules) {
-            module.getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.Clockwise_Positive));
-        }
+        // for (SwerveModule module : super.Modules) {
+        //     module.getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive));
+        // }
+
+        Modules[0].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kFrontLeftEncoderOffset));
+        Modules[1].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kFrontRightEncoderOffset));
+        Modules[2].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kBackLeftEncoderOffset));
+        Modules[3].getCANcoder().getConfigurator().apply(new MagnetSensorConfigs().withSensorDirection(SensorDirectionValue.CounterClockwise_Positive).withMagnetOffset(-TunerConstants.kBackRightEncoderOffset));
 
         publisher = NetworkTableInstance.getDefault().getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
