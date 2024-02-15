@@ -7,6 +7,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -30,8 +31,8 @@ public class Arm extends SubsystemBase {
     armLeader = new TalonFX(ArmConstants.kArmLeaderPort);
     armFollower = new TalonFX(ArmConstants.kArmFollowerPort);
 
-    armLeader.getConfigurator().apply(ArmConstants.kArmConfig, 5);
-    armFollower.getConfigurator().apply(ArmConstants.kArmConfig, 5);
+    armLeader.getConfigurator().apply(ArmConstants.kArmConfig);
+    armFollower.getConfigurator().apply(ArmConstants.kArmConfig);
 
     motionMagicVelocity = new MotionMagicVelocityVoltage(0).withOverrideBrakeDurNeutral(true);
     motionMagicVoltage = new MotionMagicVoltage(0).withOverrideBrakeDurNeutral(true);
@@ -50,6 +51,13 @@ public class Arm extends SubsystemBase {
   public Command setArmPosition(double position) {
     return run(() -> {
                   armLeader.setControl(motionMagicVoltage.withPosition(position));
+                  armFollower.setControl(follower);
+                });
+  }
+
+  public Command positionDutyCycle(double position) {
+    return run(() -> {
+                  armLeader.setControl(new PositionDutyCycle(position));
                   armFollower.setControl(follower);
                 });
   }

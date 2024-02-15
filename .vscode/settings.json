@@ -27,5 +27,15 @@
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
   "wpilib.selectDefaultSimulateExtension": false,
-  "wpilib.skipSelectSimulateExtension": false
+  "wpilib.skipSelectSimulateExtension": false,
+  "git-autoconfig.configList": [
+    {
+         "user.email": "warriorrobotics11@gmail.com",
+         "user.name": "RedshiftMain"
+     },
+     {
+         "user.email": "blakedellenbaugh@gmail.com",
+         "user.name": "blakedelle"
+     }
+]
 }

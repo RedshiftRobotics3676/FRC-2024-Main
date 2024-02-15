@@ -6,10 +6,12 @@ package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +22,9 @@ public class Intake extends SubsystemBase {
   private TalonSRX intakeMotor;
   private TalonFX shooterMotor;
   private DutyCycleOut dutyCycleOut;
+
+  private TalonSRXSimCollection intakeSim;
+  private TalonFXSimState shooterSim;
   
   /** Creates a new Intake. */
   public Intake() {
@@ -31,6 +36,9 @@ public class Intake extends SubsystemBase {
 
     // TalonFX Request type to control the shooter motor
     dutyCycleOut = new DutyCycleOut(1).withEnableFOC(false).withOverrideBrakeDurNeutral(true);
+  
+    intakeSim = intakeMotor.getSimCollection();
+  
   }
 
   /**

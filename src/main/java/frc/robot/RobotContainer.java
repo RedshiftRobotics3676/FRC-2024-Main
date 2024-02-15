@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.CommandSwerveDrivetrain;
@@ -56,7 +57,7 @@ public class RobotContainer {
   Limelight limelight = new Limelight();
   Music music = new Music(drivetrain);
   LEDs leds = new LEDs();
-  // Arm arm = new Arm();
+  Arm arm = new Arm();
   // Intake intake = new Intake();
 
   SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
@@ -64,6 +65,7 @@ public class RobotContainer {
 
   // Build an auto chooser. This will use Commands.none() as the default option.
   private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser("3m forward auto");
+  private final SendableChooser<Double> armPosChooser = new SendableChooser<Double>();
 
   private double squareInputs(double input) {
     return Math.pow(input, 2) * Math.signum(input);
@@ -91,11 +93,26 @@ public class RobotContainer {
     // // joystick.rightTrigger(.2).whileTrue(arm.setArmSpeed(joystick.getRightTriggerAxis()));
     // joystick.start().whileTrue(intake.shoot());
 
+    joystick.povUp().onTrue(arm.positionDutyCycle(0.05));
+    joystick.povLeft().onTrue(arm.positionDutyCycle(0.025));
+    joystick.povRight().onTrue(arm.positionDutyCycle(0.01));
+    joystick.povDown().onTrue(arm.positionDutyCycle(0.00));
+
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
       // SmartDashboard.putString("states", Arrays.toString(drivetrain.getState().ModuleStates));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
+
+    // armPosChooser.setDefaultOption("0.00", 0.0);
+
+    // armPosChooser.addOption("0.00", 0.0);
+    // armPosChooser.addOption("0.01", 0.01);
+    // armPosChooser.addOption("0.02", 0.02);
+    // armPosChooser.addOption("0.03", 0.03);
+    // armPosChooser.addOption("0.04", 0.04);
+
+    // arm.setDefaultCommand(new RunCommand(() -> arm.setArmPosition(armPosChooser.getSelected())));
   }
 
   public RobotContainer() {
@@ -103,6 +120,7 @@ public class RobotContainer {
     DriverStation.silenceJoystickConnectionWarning(true);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    // SmartDashboard.putNumber(null, MaxAngularRate);
   }
 
   public Command getAutonomousCommand() {
