@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.CommandSwerveDrivetrain;
@@ -43,7 +42,11 @@ public class RobotContainer {
   final double MaxAngularRate = 2*Math.PI; //default - pi = Half a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
-  CommandXboxController joystick = new CommandXboxController(0); // My joystick
+  /** Subsystem opperator controller <p><b> USB Port 1 */
+  CommandXboxController secodary = new CommandXboxController(1);
+
+  /** Driver controller <p><b> USB Port 0 */
+  CommandXboxController driver = new CommandXboxController(0);
   public CommandSwerveDrivetrain drivetrain = new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft,
   TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight); // My drivetrain
   // SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withIsOpenLoop(true/* default - true */); // I want field-centric
@@ -58,14 +61,14 @@ public class RobotContainer {
   Music music = new Music(drivetrain);
   LEDs leds = new LEDs();
   Arm arm = new Arm();
-  // Intake intake = new Intake();
+  Intake intake = new Intake();
 
   SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
   SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
 
   // Build an auto chooser. This will use Commands.none() as the default option.
   private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser("3m forward auto");
-  private final SendableChooser<Double> armPosChooser = new SendableChooser<Double>();
+  // private final SendableChooser<Double> armPosChooser = new SendableChooser<Double>();
 
   private double squareInputs(double input) {
     return Math.pow(input, 2) * Math.signum(input);
@@ -73,30 +76,31 @@ public class RobotContainer {
 
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(squareInputs(-joystick.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
-            .withVelocityY(squareInputs(-joystick.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(squareInputs(-joystick.getRightX()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        drivetrain.applyRequest(() -> drive.withVelocityX(squareInputs(-secodary.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
+            .withVelocityY(squareInputs(-secodary.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(squareInputs(-secodary.getRightX()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
-    // arm.setDefaultCommand(arm.setArmSpeed(joystick.getRightTriggerAxis() - joystick.getLeftTriggerAxis()));
+    // arm.setDefaultCommand(arm.setArmSpeed(secodary.getRightTriggerAxis() - secodary.getLeftTriggerAxis()));
 
-    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick.b().whileTrue(drivetrain // Not running continuously correctly? only when button is pressed ocne not held
-        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+    driver.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    driver.b().whileTrue(drivetrain // Not running continuously correctly? only when button is pressed ocne not held
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-secodary.getLeftY(), -secodary.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
-    joystick.y().onTrue(music.loadFromChooser());
-    joystick.x().onTrue(music.playOrPause());
+    secodary.y().onTrue(music.loadFromChooser());
+    secodary.x().onTrue(music.playOrPause());
 
-    // // joystick.rightTrigger(.2).whileTrue(arm.setArmSpeed(joystick.getRightTriggerAxis()));
-    // joystick.start().whileTrue(intake.shoot());
+    // // secodary.rightTrigger(.2).whileTrue(arm.setArmSpeed(secodary.getRightTriggerAxis()));
+    secodary.start().whileTrue(intake.shoot());
 
-    joystick.povUp().onTrue(arm.positionDutyCycle(0.05));
-    joystick.povLeft().onTrue(arm.positionDutyCycle(0.025));
-    joystick.povRight().onTrue(arm.positionDutyCycle(0.01));
-    joystick.povDown().onTrue(arm.positionDutyCycle(0.00));
+
+    secodary.povUp().onTrue(arm.setArmPosition(0.05));
+    secodary.povLeft().onTrue(arm.setArmPosition(0.025));
+    secodary.povRight().onTrue(arm.setArmPosition(0.01));
+    secodary.povDown().onTrue(arm.setArmPosition(0.00));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));

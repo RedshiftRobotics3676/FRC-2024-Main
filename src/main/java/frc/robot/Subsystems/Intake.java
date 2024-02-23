@@ -5,43 +5,47 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import static frc.robot.Constants.IntakeConstants.*;
 
 public class Intake extends SubsystemBase {
   private TalonSRX intakeMotor;
   private TalonFX shooterMotor;
   private DutyCycleOut dutyCycleOut;
 
-  private TalonSRXSimCollection intakeSim;
-  private TalonFXSimState shooterSim;
+  // private TalonSRXSimCollection intakeSim;
+  // private TalonFXSimState shooterSim;
   
   /** Creates a new Intake. */
   public Intake() {
-    intakeMotor = new TalonSRX(10);
+    intakeMotor = new TalonSRX(kIntakeMotorID);
     intakeMotor.setNeutralMode(NeutralMode.Brake);
+    intakeMotor.setInverted(true);
 
-    shooterMotor = new TalonFX(9);
+    shooterMotor = new TalonFX(kShooterMotorID);
     shooterMotor.setNeutralMode(NeutralModeValue.Brake);
 
+    shooterMotor.getConfigurator().apply(kShooterConfigs);
+
     // TalonFX Request type to control the shooter motor
-    dutyCycleOut = new DutyCycleOut(1).withEnableFOC(false).withOverrideBrakeDurNeutral(true);
+    // dutyCycleOut = new DutyCycleOut(-0.6).withEnableFOC(false).withOverri deBrakeDurNeutral(true);
   
-    intakeSim = intakeMotor.getSimCollection();
+    // intakeSim = intakeMotor.getSimCollection();
   
   }
 
   /**
+   *  
    * @param speed Percent output to set the intake motor to
    * @return Command to run the intake motor and stop it when the command is interupted
    */
@@ -63,14 +67,14 @@ public class Intake extends SubsystemBase {
     return new FunctionalCommand(
         () -> {
             // Start the shooter motor at full speed
-            shooterMotor.setControl(dutyCycleOut);
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(1));
             SmartDashboard.putBoolean("started", true);
             SmartDashboard.putBoolean("stopped", false);
         },
         () -> {
           SmartDashboard.putBoolean("waiting", true);
             // Wait until the shooter motor is at full speed
-            if (shooterMotor.getVelocity().refresh().getValue() >= 100) {
+            if (shooterMotor.getVelocity().getValue() >= 0.5) {
               SmartDashboard.putBoolean("waiting", false);
               SmartDashboard.putBoolean("shooting", true);
                 // Start the intake motor at full speed to feed the disc into the shooter

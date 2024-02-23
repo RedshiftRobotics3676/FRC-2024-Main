@@ -16,7 +16,7 @@ public class LEDs extends SubsystemBase {
   private final AddressableLED m_led;
   private final AddressableLEDBuffer m_buffer;
   private final int pwmPort = 0;
-  private final int ledLength = 300; //220
+  private final int ledLength = 600; //220
   /** Creates a new LEDs. */
   public LEDs() {
     m_led = new AddressableLED(pwmPort);
