@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -22,6 +24,8 @@ public class Intake extends SubsystemBase {
   private TalonSRX intakeMotor;
   private TalonFX shooterMotor;
   private DutyCycleOut dutyCycleOut;
+
+  private ColorSensorV3 colorSensor;
 
   // private TalonSRXSimCollection intakeSim;
   // private TalonFXSimState shooterSim;
@@ -36,6 +40,8 @@ public class Intake extends SubsystemBase {
     shooterMotor.setNeutralMode(NeutralModeValue.Brake);
 
     shooterMotor.getConfigurator().apply(kShooterConfigs);
+
+    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
     // TalonFX Request type to control the shooter motor
     // dutyCycleOut = new DutyCycleOut(-0.6).withEnableFOC(false).withOverri deBrakeDurNeutral(true);
@@ -61,6 +67,24 @@ public class Intake extends SubsystemBase {
   public Command out(double speed) {
     return runEnd(() -> intakeMotor.set(ControlMode.PercentOutput, -speed), // Runnable to run the intake motor in reverse
                   () -> intakeMotor.set(ControlMode.PercentOutput, 0)); // Runnable to stop the intake motor when the command is interupted
+  }
+
+  public Command inAutoStop(double speed) {
+    return new FunctionalCommand(
+      () -> {
+          intakeMotor.set(ControlMode.PercentOutput, speed);
+      }, 
+      () -> {
+        
+      }, 
+      (interrupted) -> {
+          intakeMotor.set(ControlMode.PercentOutput, 0);
+      }, 
+      () -> {
+          return colorSensor.getProximity() > 1500;
+      }, 
+      this
+    );
   }
 
   public Command shoot() {
@@ -92,12 +116,15 @@ public class Intake extends SubsystemBase {
         () -> {
             // This command never finishes on its own, but it can be interrupted
             return false;
-        }
+        },
+        this
     );
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("colorProx", colorSensor.getProximity());
+    SmartDashboard.putString("color", colorSensor.getColor().toString());
   }
 }

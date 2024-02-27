@@ -29,8 +29,7 @@ public class Limelight extends SubsystemBase {
 
   AnalogInput input = new AnalogInput(3);
 
-  // I2C.Port i2cPort =  I2C.Port.kOnboard;
-  ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  // ColorSensorV3 colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
   
   /** Creates a new Limelight. */
   public Limelight() {
@@ -96,7 +95,6 @@ public class Limelight extends SubsystemBase {
 
     SmartDashboard.putNumber("Ultrasonic (ft)", input.getAverageVoltage() * 3.30322581/* 1024 * 5 / 1550 */); // Roughly scaled to 1 foot
   
-    SmartDashboard.putNumber("colorProx", colorSensor.getProximity());
-    SmartDashboard.putString("color", colorSensor.getColor().toString());
+    
   }
 }
