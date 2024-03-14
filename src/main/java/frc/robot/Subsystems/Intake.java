@@ -5,25 +5,25 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.IntakeConstants.*;
 
 public class Intake extends SubsystemBase {
   private TalonSRX intakeMotor;
   private TalonFX shooterMotor;
-  private DutyCycleOut dutyCycleOut;
 
   private ColorSensorV3 colorSensor;
 
@@ -35,6 +35,8 @@ public class Intake extends SubsystemBase {
     intakeMotor = new TalonSRX(kIntakeMotorID);
     intakeMotor.setNeutralMode(NeutralMode.Brake);
     intakeMotor.setInverted(true);
+
+    intakeMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 15, 20, 500));
 
     shooterMotor = new TalonFX(kShooterMotorID);
     shooterMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -48,6 +50,10 @@ public class Intake extends SubsystemBase {
   
     // intakeSim = intakeMotor.getSimCollection();
   
+  }
+
+  public Command set(double percent) {
+    return runOnce(() -> intakeMotor.set(ControlMode.PercentOutput, percent));
   }
 
   /**
@@ -69,62 +75,108 @@ public class Intake extends SubsystemBase {
                   () -> intakeMotor.set(ControlMode.PercentOutput, 0)); // Runnable to stop the intake motor when the command is interupted
   }
 
-  public Command inAutoStop(double speed) {
+  public Command inAutoStop(double speed/*, Timer t (should be passed, not created each call) */) {
     return new FunctionalCommand(
       () -> {
           intakeMotor.set(ControlMode.PercentOutput, speed);
       }, 
       () -> {
-        
+        // intakeMotor.set(ControlMode.PercentOutput, speed);
+        //  Write control code here
+        /*  I recommend this for ending the loop - Patrick
+            if(colorSensor.getProximity() > 150 && !timer.hasElapsed(1)) {
+              timer.start();
+              intakeMotor.set(ControlMode.PercentOutput, -0.25);
+            }
+        */
       }, 
       (interrupted) -> {
-          intakeMotor.set(ControlMode.PercentOutput, 0);
+        Timer timer = new Timer();
+        timer.start();
+        //BAD BAD BAD, gets whole robot stuck in loop
+        while (colorSensor.getProximity() < 150 && timer.get() < 1) {
+          intakeMotor.set(ControlMode.PercentOutput, -0.25);
+        }
+        // Only keep this line!
+        intakeMotor.set(ControlMode.PercentOutput, 0);
       }, 
       () -> {
-          return colorSensor.getProximity() > 1500;
+          // return t.hasElapsed(1);
+          return colorSensor.getProximity() > 150;
       }, 
       this
     );
   }
 
-  public Command shoot() {
+  public Command shoot(int speed) {
     return new FunctionalCommand(
         () -> {
             // Start the shooter motor at full speed
-            shooterMotor.setControl(motionMagicVelocity.withVelocity(1));
-            SmartDashboard.putBoolean("started", true);
-            SmartDashboard.putBoolean("stopped", false);
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(speed));
         },
         () -> {
-          SmartDashboard.putBoolean("waiting", true);
+            SmartDashboard.putNumber("shooter speed RPS", shooterMotor.getVelocity().getValueAsDouble());
             // Wait until the shooter motor is at full speed
-            if (shooterMotor.getVelocity().getValue() >= 0.5) {
-              SmartDashboard.putBoolean("waiting", false);
-              SmartDashboard.putBoolean("shooting", true);
+            if (shooterMotor.getVelocity().getValue() >= (speed - 10)) {
                 // Start the intake motor at full speed to feed the disc into the shooter
                 intakeMotor.set(ControlMode.PercentOutput, 1);
             }
         },
         (interrupted) -> {
-          SmartDashboard.putBoolean("shooting", false);
-          SmartDashboard.putBoolean("started", false);
-          SmartDashboard.putBoolean("stopped", true);
             // Stop both motors
-            shooterMotor.stopMotor();
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(0));
             intakeMotor.set(ControlMode.PercentOutput, 0);
         },
         () -> {
             // This command never finishes on its own, but it can be interrupted
             return false;
         },
-        this
+        this // Subsytem requirement of the intake
     );
+  }
+
+  public Command shoot1Sec(int speed) {
+    return new FunctionalCommand(
+        () -> {
+            // Start the shooter motor at full speed
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(speed));
+        },
+        () -> {
+            SmartDashboard.putNumber("shooter speed RPS", shooterMotor.getVelocity().getValueAsDouble());
+            // Wait until the shooter motor is at full speed
+            if (shooterMotor.getVelocity().getValue() >= (speed - 5)) {
+                // Start the intake motor at full speed to feed the disc into the shooter
+                intakeMotor.set(ControlMode.PercentOutput, 1);
+            }
+        },
+        (interrupted) -> {
+            // Stop both motors
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(0));
+            intakeMotor.set(ControlMode.PercentOutput, 0);
+        },
+        () -> {
+          Timer timer = new Timer();
+          timer.start();
+          return timer.hasElapsed(1);
+        },
+        this // Subsytem requirement of the intake
+    );
+  }
+
+  public Command setShooter(double speed) {
+    return runOnce(() -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)));
+  }
+
+  public boolean checkColorSensor() {
+    return colorSensor.getProximity() > 150;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("colorProx", colorSensor.getProximity());
-    SmartDashboard.putString("color", colorSensor.getColor().toString());
+
+    SmartDashboard.putNumber("intake stator current", intakeMotor.getStatorCurrent());
+    SmartDashboard.putNumber("intake supply current", intakeMotor.getSupplyCurrent());
   }
 }

@@ -6,12 +6,8 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.networktables.NetworkTableInstance;
+// import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight extends SubsystemBase {
 
@@ -19,12 +15,12 @@ public class Limelight extends SubsystemBase {
   double ty;
   double ta;
 
-  private double x;
-  private double y;
-  private double z;
-  private double roll;
-  private double pitch;
-  private double yaw;
+  // private double x;
+  // private double y;
+  // private double z;
+  // private double roll;
+  // private double pitch;
+  // private double yaw;
 
 
   AnalogInput input = new AnalogInput(3);
@@ -72,29 +68,31 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("LimelightArea", ta);
     SmartDashboard.putNumber("LimelightID", tid); */
 
-    double[] bbb = {1,2,3,4,5,6};
+    // double[] bbb = {1,2,3,4,5,6};
       
       
-    double[] arr = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(bbb);
+    // double[] arr = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(bbb);
       
-    x = arr[0];
-    y = arr[1];
-    z = arr[2];
-    roll = arr[3];
-    pitch = arr[4];
-    yaw = arr[5];
+    // x = arr[0];
+    // y = arr[1];
+    // z = arr[2];
+    // roll = arr[3];
+    // pitch = arr[4];
+    // yaw = arr[5];
       
-    SmartDashboard.putNumber("Limelight X", x);
-    SmartDashboard.putNumber("Limelight Y", y);
-    SmartDashboard.putNumber("Limelight Z", z);
-    SmartDashboard.putNumber("Limelight Roll", roll);
-    SmartDashboard.putNumber("Limelight Pitch", pitch);
-    SmartDashboard.putNumber("Limelight Yaw", yaw);
+    // SmartDashboard.putNumber("Limelight X", x);
+    // SmartDashboard.putNumber("Limelight Y", y);
+    // SmartDashboard.putNumber("Limelight Z", z);
+    // SmartDashboard.putNumber("Limelight Roll", roll);
+    // SmartDashboard.putNumber("Limelight Pitch", pitch);
+    // SmartDashboard.putNumber("Limelight Yaw", yaw);
 
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
 
-    SmartDashboard.putNumber("Ultrasonic (ft)", input.getAverageVoltage() * 3.30322581/* 1024 * 5 / 1550 */); // Roughly scaled to 1 foot
+    // SmartDashboard.putNumber("Ultrasonic (ft)", input.getAverageVoltage() * 3.30322581/* 1024 * 5 / 1550 */); // Roughly scaled to 1 foot
   
-    
+    // SmartDashboard.putNumber("color sensor prox", colorSensor.getProximity());
+    // SmartDashboard.putString("color sensor color", colorSensor.getColor().toString());
+    // SmartDashboard.putString("color sensor color hex", colorSensor.getColor().toHexString());
   }
 }

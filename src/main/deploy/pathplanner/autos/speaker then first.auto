@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "arm mid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "speaker to first"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake 1M"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake out"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "first to speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

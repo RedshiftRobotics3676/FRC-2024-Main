@@ -1,9 +1,13 @@
 package frc.robot.Subsystems;
 
+import frc.robot.Constants.RobotConstants;
 import frc.robot.generated.TunerConstants;
 
+import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+
+import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -21,6 +25,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +41,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     StructArrayPublisher<SwerveModuleState> publisher;
     SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
     SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
+
+    private Optional<EstimatedRobotPose> estimatedPose = Optional.empty();
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -63,20 +71,30 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
         publisher = NetworkTableInstance.getDefault().getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
-        BooleanSupplier flipped = () -> false;
+
+        Optional<Alliance> ally = DriverStation.getAlliance();
+        BooleanSupplier flipped = () -> {
+            if (ally.isPresent()) {
+                return ally.get() == Alliance.Red;
+            }
+            else {
+                return false;
+            }
+        };
+
         AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::driveRobotRelative1, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(.5, 0.0, .5), // Translation PID constants
-            new PIDConstants(.5, 0.0, 1), // Rotation PID constants
+            new PIDConstants(3, 0, 0), // Translation PID constants
+            new PIDConstants(5, 0.0, 0), // Rotation PID constants
             5.55, // Max module speed, in m/s
-            0.381, // Drive base radius in meters. Distance from robot center to furthest module.
+            0.377, // Drive base radius in meters. Distance from robot center to furthest module.
             new ReplanningConfig() // Default path replanning config. See the API for the options here
         ),
-        flipped, // 
+        flipped, // true for red side, false for blue side
         this // Reference to this subsystem to set requirements
         );
     }
@@ -114,8 +132,18 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         this.setControl(robotCentric.withVelocityX(robotRelative.vxMetersPerSecond)
                                .withVelocityY(robotRelative.vyMetersPerSecond)
                                .withRotationalRate(robotRelative.omegaRadiansPerSecond));
-        SmartDashboard.putString("getChassisSpeeds", getRobotRelativeSpeeds().toString());
-        SmartDashboard.putString("driveChassisSpeeds", robotRelative.toString());
+        // SmartDashboard.putString("getChassisSpeeds", getRobotRelativeSpeeds().toString());
+        // SmartDashboard.putString("driveChassisSpeeds", robotRelative.toString());
+    }
+
+    public Command driveRobotRelativeCommand(ChassisSpeeds robotRelative) {
+        return runEnd(() -> this.setControl(robotCentric.withVelocityX(robotRelative.vxMetersPerSecond)
+                                .withVelocityY(robotRelative.vyMetersPerSecond)
+                                .withRotationalRate(robotRelative.omegaRadiansPerSecond)),
+
+                      () -> this.setControl(robotCentric.withVelocityX(0)
+                                .withVelocityY(0)
+                                .withRotationalRate(0)));
     }
 
     /* public void driveRobotRelative2(ChassisSpeeds chassisSpeeds) {
@@ -155,14 +183,26 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         );
     } */
 
+    public void setEstimatedPose(Optional<EstimatedRobotPose> estimatedPose) {
+        this.estimatedPose = estimatedPose;
+    }
+
     @Override
     public void periodic() {
         publisher.set(getState().ModuleStates);
+        SmartDashboard.putNumber("FL Angle", Modules[0].getCANcoder().getAbsolutePosition().getValueAsDouble());
+        SmartDashboard.putNumber("FR Angle", Modules[1].getCANcoder().getAbsolutePosition().getValueAsDouble());
+        SmartDashboard.putNumber("BL Angle", Modules[2].getCANcoder().getAbsolutePosition().getValueAsDouble());
+        SmartDashboard.putNumber("BR Angle", Modules[3].getCANcoder().getAbsolutePosition().getValueAsDouble());
+
+        // if (estimatedPose.isPresent()) {
+        //     addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds); 
+        // }
     }
 
     @Override
     public void simulationPeriodic() {
         /* Assume 20ms update rate, get battery voltage from WPILib */
-        updateSimState(0.02, RobotController.getBatteryVoltage());
+        updateSimState(RobotConstants.LOOP_PERIOD_SECONDS, RobotController.getBatteryVoltage());
     }
 }

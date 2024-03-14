@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -13,6 +12,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  Robot(double period) {
+    super(period);
+  }
 
   @Override
   public void robotInit() {
@@ -22,7 +25,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    m_robotContainer.leds.rainbow();
+    // m_robotContainer.leds.rainbow();
     // m_robotContainer.leds.pulseAllianceColor();
     // m_robotContainer.leds.setSolidRGB(0, 0, 0);
     // m_robotContainer.leds.updateLEDs();
@@ -41,6 +44,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    m_robotContainer.arm.removeDefaultCommand();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -49,7 +54,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
+  }
 
   @Override
   public void autonomousExit() {}
@@ -59,10 +66,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.arm.setDefaultCommand(m_robotContainer.arm.setArmPosition(0.035));
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
+    
+  }
 
   @Override
   public void teleopExit() {}

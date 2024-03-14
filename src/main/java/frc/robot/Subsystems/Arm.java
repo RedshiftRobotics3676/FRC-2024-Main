@@ -5,25 +5,31 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotionMagicIsRunningValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.ArmConstants.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Arm extends SubsystemBase {
   private TalonFX armLeader;
   private TalonFX armFollower;
 
-  // private MotionMagicVelocityVoltage motionMagicVelocity;
-  // private MotionMagicVoltage motionMagicVoltage;
   private Follower follower;
 
   private CANcoder canCoder;
+
+  private double lastSetPos = 0;
+
+  private ArrayList<Double> array;
   
   /** Creates a new Arm. */
   public Arm() {
@@ -37,8 +43,20 @@ public class Arm extends SubsystemBase {
     // motionMagicVelocity = new MotionMagicVelocityVoltage(1).withOverrideBrakeDurNeutral(true).withEnableFOC(false);
     follower = new Follower(kArmLeaderPort, true);
 
+    armFollower.setControl(follower);
+
     canCoder = new CANcoder(kArmCanCoderPort);
     canCoder.getConfigurator().apply(kArmCANCoderConfigs);
+
+    // double[] helperArray = new double[50];
+    // Arrays.fill(helperArray, 0.035);
+    array = new ArrayList<Double>(50);
+    Collections.fill(array, 0.035);
+    System.out.println(array.size());
+    for (int i = 0; i < 50; i++) {
+      array.add(i, 0.035);
+    }
+    System.out.println(array.size());
   }
 
   // public Command setArmSpeed(double speed) {
@@ -50,7 +68,74 @@ public class Arm extends SubsystemBase {
 
   public Command setArmPosition(double position) {
     return run(() -> {
+                  // lastSetPos = position;
                   armLeader.setControl(motionMagicVoltage.withPosition(position));
+                  armFollower.setControl(follower);
+                });
+  }
+
+  public Command setArmPositionEnd(double position) {
+    return runEnd(() -> {
+                  // lastSetPos = position;
+                  armLeader.setControl(motionMagicVoltage.withPosition(position));
+                  armFollower.setControl(follower);
+                },
+                () -> {
+                  armLeader.setControl(motionMagicVoltage.withPosition(0.035));
+                  armFollower.setControl(follower);
+                });
+  }
+
+  public Command setArmPositionCheck(double position) {
+    return new FunctionalCommand(
+                () -> {
+                  armLeader.setControl(motionMagicVoltage.withPosition(position));
+                  armFollower.setControl(follower);
+                },
+                () -> {
+
+                },
+                (interrupted) -> {
+
+                },
+                () -> {
+                  // return canCoder.getAbsolutePosition().getValueAsDouble() > position - 0.005 && canCoder.getAbsolutePosition().getValueAsDouble() < position + 0.005;
+                  return armLeader.getMotionMagicIsRunning().getValue().equals(MotionMagicIsRunningValue.Enabled);
+                },
+                this);
+  }
+
+  public Command setArmPositionOnce(double position) {
+    return runOnce(() -> {
+                  // lastSetPos = position;
+                  armLeader.setControl(motionMagicVoltage.withPosition(position));
+                  armFollower.setControl(follower);
+                });
+  }
+
+  public Command setArmPositionAverage(Double position) {
+    return run(() -> {
+                  SmartDashboard.putNumber("guitar arm input pos", position);
+                  SmartDashboard.putNumber("remove", array.remove(0));
+                  array.add(position);
+                  System.out.println(position);
+                  double sum = 0;
+                  for (double pos : array) {
+                    sum += pos;
+                  }
+                  double finalPos = sum/50;
+                  SmartDashboard.putNumber("guitar arm pos", finalPos);
+
+                  armLeader.setControl(motionMagicVoltage.withPosition(finalPos));
+                  armFollower.setControl(follower);
+                });
+  }
+
+  public Command incrementArmPosition(double amount) {
+    return run(() -> {
+                  System.out.println(lastSetPos + " " + (amount/10.0) + " " + amount);
+                  lastSetPos += amount/10.0;
+                  armLeader.setControl(motionMagicVoltage.withPosition(lastSetPos));
                   armFollower.setControl(follower);
                 });
   }
@@ -65,6 +150,6 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Position", canCoder.getPosition().getValue());
+    SmartDashboard.putNumber("Arm Position", canCoder.getAbsolutePosition().getValue());
   }
 }

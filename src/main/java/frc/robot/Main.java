@@ -10,6 +10,8 @@ public final class Main {
   private Main() {}
 
   public static void main(String... args) {
-    RobotBase.startRobot(Robot::new);
+    Robot robot = new Robot(Constants.RobotConstants.LOOP_PERIOD_SECONDS); // 2ms robot loop rather than default 20ms
+    RobotBase.startRobot(() -> robot);
+    robot.close();
   }
 }

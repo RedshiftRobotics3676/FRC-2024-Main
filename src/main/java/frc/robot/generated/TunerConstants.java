@@ -19,7 +19,7 @@ public class TunerConstants {
     // - VelocityVoltage, if DrivetrainConstants.SupportsPro is false (default)
     // - VelocityTorqueCurrentFOC, if DrivetrainConstants.SupportsPro is true
     public static final Slot0Configs driveGains = new Slot0Configs() //TODO find drive pids maybe?
-        .withKP(0.2).withKI(0.0).withKD(0.0)
+        .withKP(0.3).withKI(0.0).withKD(0.0)
         .withKS(0.0).withKV(0.0).withKA(0.0);
 
     // The stator current at which the wheels start to slip;
@@ -38,9 +38,9 @@ public class TunerConstants {
     public static final double kSteerGearRatio = 21.428571428571427;
     public static final double kWheelRadiusInches = 2;
 
-    public static final boolean kSteerMotorReversed = true;//false;
-    public static final boolean kInvertLeftSide = false;//false;
-    public static final boolean kInvertRightSide = true;//true;
+    public static final boolean kSteerMotorReversed = true;
+    public static final boolean kInvertLeftSide = false;
+    public static final boolean kInvertRightSide = true;
 
     public static final String kCANbusName = "";
     public static final int kPigeonId = 1;
@@ -82,7 +82,7 @@ public class TunerConstants {
     public static final int kFrontRightDriveMotorId = 4;
     public static final int kFrontRightSteerMotorId = 3;
     public static final int kFrontRightEncoderId = 22;
-    public static final double kFrontRightEncoderOffset = 0.44970703125;
+    public static final double kFrontRightEncoderOffset = 0.450439453125;
 
     public static final double kFrontRightXPosInches = 10.5;
     public static final double kFrontRightYPosInches = -10.5;
@@ -91,7 +91,7 @@ public class TunerConstants {
     public static final int kBackLeftDriveMotorId = 6;
     public static final int kBackLeftSteerMotorId = 5;
     public static final int kBackLeftEncoderId = 23;
-    public static final double kBackLeftEncoderOffset = 0.037353515625;
+    public static final double kBackLeftEncoderOffset = 0.232310546875;//0.037353515625;
 
     public static final double kBackLeftXPosInches = -10.5;
     public static final double kBackLeftYPosInches = 10.5;

@@ -16,7 +16,7 @@ public class LEDs extends SubsystemBase {
   private final AddressableLED m_led;
   private final AddressableLEDBuffer m_buffer;
   private final int pwmPort = 0;
-  private final int ledLength = 600; //220
+  private final int ledLength = 350; //220
   /** Creates a new LEDs. */
   public LEDs() {
     m_led = new AddressableLED(pwmPort);
@@ -52,7 +52,7 @@ public class LEDs extends SubsystemBase {
       // shape is a circle so only one value needs to precess
       final var hue = (m_rainbowFirstPixelHue + (i * 180 / ledLength)) % 180;
       // Set the value
-      m_buffer.setHSV(i, hue, 255, 255);
+      m_buffer.setHSV(i, hue, 255, 100);
     }
     // Increase by to make the rainbow "move"
     m_rainbowFirstPixelHue += 1;

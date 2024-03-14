@@ -1,0 +1,103 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.5,
+      "y": 5.555088802485298
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "arm mid"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "start to speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "speaker to mid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake 1M"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake out"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "mid to speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "speaker to third"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake 1M"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake out"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "third to speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
