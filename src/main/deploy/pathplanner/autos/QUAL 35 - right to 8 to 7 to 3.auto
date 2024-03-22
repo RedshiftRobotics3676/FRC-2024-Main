@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.9193841464606024,
-      "y": 6.561516969187785
+      "x": 0.7220452902444284,
+      "y": 4.4499912076747234
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -20,13 +20,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "left to 1"
+            "pathName": "right to 8"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "1 to left"
+            "pathName": "8 to right"
           }
         },
         {
@@ -38,13 +38,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "left to 4"
+            "pathName": "right to 7"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4 to left"
+            "pathName": "7 to right"
           }
         },
         {
@@ -56,31 +56,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "left to 5"
+            "pathName": "right to 3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 to left"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "auton shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "left to 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2 to left"
+            "pathName": "3 to right"
           }
         },
         {
@@ -92,6 +74,6 @@
       ]
     }
   },
-  "folder": "left speaker start",
+  "folder": "right speaker start",
   "choreoAuto": false
 }

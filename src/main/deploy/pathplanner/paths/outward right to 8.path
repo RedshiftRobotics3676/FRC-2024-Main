@@ -3,61 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.023582970242865,
-        "y": 2.2989976749184273
+        "x": 0.7220452902444284,
+        "y": 4.4499912076747234
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.428577011000178,
-        "y": 1.3221703366483653
+        "x": 1.274594087649716,
+        "y": 2.022723276215784
       },
       "isLocked": false,
-      "linkedName": "right pickup 7"
+      "linkedName": "right speaker start"
     },
     {
       "anchor": {
-        "x": 3.9189347609464464,
-        "y": 2.417400988648132
+        "x": 3.7807975615951244,
+        "y": 1.716848049080714
       },
       "prevControl": {
-        "x": 5.339774525702899,
-        "y": 1.5293761356753486
+        "x": 2.8927727086223416,
+        "y": 1.963521619350932
       },
       "nextControl": {
-        "x": 2.46675795224171,
-        "y": 3.325011494088593
+        "x": 5.246013509475582,
+        "y": 1.3098436191139196
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7220452902444284,
-        "y": 4.4499912076747234
+        "x": 7.9446474277563945,
+        "y": 0.8189562532971225
       },
       "prevControl": {
-        "x": 2.225004055005461,
-        "y": 3.3976081509706937
+        "x": 6.7431478837375485,
+        "y": 1.0308130402165627
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "right speaker start"
+      "linkedName": "right pickup 8"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [
     {
-      "name": "stop slowly",
-      "minWaypointRelativePos": 1.95,
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.5,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 3.0,
+        "maxVelocity": 5.55,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
@@ -66,16 +66,16 @@
   ],
   "eventMarkers": [
     {
-      "name": "start shooter",
-      "waypointRelativePos": 0.0,
+      "name": "intake",
+      "waypointRelativePos": 1.5,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "shooter start"
+                "name": "auton intake"
               }
             }
           ]
@@ -91,13 +91,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -60.0,
-    "rotateFast": true
+    "rotation": -4.63546342690267,
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "right speaker start",
   "previewStartingState": {
-    "rotation": 24.94390526342458,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

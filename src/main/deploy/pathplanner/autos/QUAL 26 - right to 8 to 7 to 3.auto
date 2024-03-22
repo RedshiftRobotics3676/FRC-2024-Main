@@ -64,12 +64,6 @@
           "data": {
             "pathName": "3 to right"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "auton shoot"
-          }
         }
       ]
     }

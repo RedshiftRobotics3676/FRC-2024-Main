@@ -167,9 +167,9 @@ public final class Constants {
 
         public static final SoftwareLimitSwitchConfigs kElevatorSoftLimitSwitch = new SoftwareLimitSwitchConfigs()
             .withForwardSoftLimitEnable(true)
-            .withForwardSoftLimitThreshold(315)
+            .withForwardSoftLimitThreshold(300)
             .withReverseSoftLimitEnable(true)
-            .withReverseSoftLimitThreshold(20);
+            .withReverseSoftLimitThreshold(5);
 
         private static final MotionMagicConfigs kElevatorMotionMagicConfigs = new MotionMagicConfigs()
             .withMotionMagicAcceleration(1)
