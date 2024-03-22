@@ -161,7 +161,7 @@ public class Intake extends SubsystemBase {
   /** Starts the shooter and stops it when interuppted <p> Does not automatically feed the note like Intake.shoot() */
   public Command shootNoIntake(double speed) {
     return runEnd(() -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)),
-                  () -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)));
+                  () -> shooterMotor.setControl(motionMagicVelocity.withVelocity(0)));
   }
 
   public Command startShooter(int speed) {

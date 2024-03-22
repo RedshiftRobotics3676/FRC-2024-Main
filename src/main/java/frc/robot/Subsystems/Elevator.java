@@ -4,11 +4,11 @@
 
 package frc.robot.Subsystems;
 
-import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 // import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +28,10 @@ public class Elevator extends SubsystemBase {
   // public Command down(double speed) {
   //   return new RunCommand(() -> elevator.setControl(new MotionMagicVelocityVoltage(-speed)), this);
   // }
+
+  public double getPos() {
+    return elevator.getPosition().getValueAsDouble();
+  }
 
   public Command upOutput(double speed) {
     return new RunCommand(() -> elevator.setControl(new DutyCycleOut(speed)), this);
@@ -61,12 +65,13 @@ public class Elevator extends SubsystemBase {
     elevator.setControl(new DutyCycleOut(0));
   }
 
-  public Command setSoftLimits(boolean enable) {
-    return runOnce(() -> elevator.getConfigurator().apply(ElevatorConstants.kElevatorSoftLimitSwitch.withForwardSoftLimitEnable(enable).withReverseSoftLimitEnable(enable)));
-  }
+  // public Command setSoftLimits(boolean enable) {
+  //   return runOnce(() -> elevator.getConfigurator().apply(ElevatorConstants.kElevatorSoftLimitSwitch.withForwardSoftLimitEnable(enable).withReverseSoftLimitEnable(enable)));
+  // }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator pos", elevator.getPosition().getValueAsDouble());
   }
 }

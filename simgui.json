@@ -34,6 +34,11 @@
         "header": {
           "open": true
         }
+      },
+      "Talon FX (v6)[51]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -190,7 +195,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

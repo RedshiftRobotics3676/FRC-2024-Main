@@ -56,13 +56,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "center to 5"
+            "pathName": "center to 4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5 to center"
+            "pathName": "4 to center"
           }
         },
         {
@@ -74,13 +74,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "center to 4"
+            "pathName": "center to 5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4 to center"
+            "pathName": "5 to center"
           }
         },
         {

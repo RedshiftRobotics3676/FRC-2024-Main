@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.65
+        "x": 0.9193841464606024,
+        "y": 6.551650026376976
       },
       "prevControl": {
-        "x": 0.9110173270683883,
-        "y": 6.928890191381386
+        "x": 1.0804014735289909,
+        "y": 6.830540217758362
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,19 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 5.55,
+        "maxAcceleration": 2.5,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 360.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "start shooter",
@@ -67,7 +79,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

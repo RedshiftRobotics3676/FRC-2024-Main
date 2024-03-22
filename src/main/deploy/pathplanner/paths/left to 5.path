@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.65
+        "x": 0.9193841464606024,
+        "y": 6.551650026376976
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.212019382530518,
-        "y": 7.084120444167338
+        "x": 3.3814035289911204,
+        "y": 6.985770470544313
       },
       "isLocked": false,
       "linkedName": "left speaker start"
@@ -51,19 +51,7 @@
       "rotateFast": true
     }
   ],
-  "constraintZones": [
-    {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.25,
-      "constraints": {
-        "maxVelocity": 5.55,
-        "maxAcceleration": 5.55,
-        "maxAngularVelocity": 120.0,
-        "maxAngularAcceleration": 360.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
       "name": "intake",
@@ -85,7 +73,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

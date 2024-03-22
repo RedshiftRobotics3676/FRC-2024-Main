@@ -29,7 +29,7 @@ public final class Constants {
         /** Shooter flywheel speed used for shooting across the field */
         public static final int shooterFastSpeed = 65;
         //* Shooter flywheel speed used during auton */
-        public static final int shooterFastAuton = 55;
+        public static final int shooterAutonSpeed = 48;
 
         /** Intake speed for feeding notes back out of the intake */ 
         public static final double intakeOutSpeed = 0.25;
@@ -167,9 +167,9 @@ public final class Constants {
 
         public static final SoftwareLimitSwitchConfigs kElevatorSoftLimitSwitch = new SoftwareLimitSwitchConfigs()
             .withForwardSoftLimitEnable(true)
-            .withForwardSoftLimitThreshold(335)
+            .withForwardSoftLimitThreshold(315)
             .withReverseSoftLimitEnable(true)
-            .withReverseSoftLimitThreshold(-5);
+            .withReverseSoftLimitThreshold(20);
 
         private static final MotionMagicConfigs kElevatorMotionMagicConfigs = new MotionMagicConfigs()
             .withMotionMagicAcceleration(1)

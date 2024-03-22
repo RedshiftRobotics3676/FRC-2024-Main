@@ -20,9 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.AutonIntake;
@@ -65,9 +63,9 @@ public class RobotContainer {
   /** Subsystem opperator controller <p><b> USB Port 1 */
   CommandXboxController secondary = new CommandXboxController(1);
 
-  CommandXboxController guitar = new CommandXboxController(2);
+  // CommandXboxController guitar = new CommandXboxController(2);
 
-  CommandJoystick joystick = new CommandJoystick(3);
+  // CommandJoystick joystick = new CommandJoystick(3);
 
   /** Driver controller <p><b> USB Port 0 */
   CommandXboxController driver = new CommandXboxController(0);
@@ -253,20 +251,21 @@ public class RobotContainer {
 
     secondary.leftBumper().whileTrue(intake.shoot(shooterSlowSpeed));
 
+    Trigger elevatorIsDown = new Trigger(() -> elevator.getPos() < 5);
 
-    secondary.povUp().whileTrue(arm.setArmPosition(armHighPos));
-    secondary.povLeft().whileTrue(arm.setArmPosition(armMidPos));
-    secondary.povRight().whileTrue(arm.setArmPosition(armDefaultPos));
+    secondary.povUp().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
+    secondary.povLeft().and(elevatorIsDown).whileTrue(arm.setArmPosition(armMidPos));
+    secondary.povRight().and(elevatorIsDown).whileTrue(arm.setArmPosition(armDefaultPos));
     secondary.povDown().whileTrue(arm.setArmPosition(armDownPos));
 
-    secondary.start().whileTrue(arm.setArmPosition(armStartingPos));
+    // secondary.start().whileTrue(arm.setArmPosition(armStartingPos));
 
-    elevator.setDefaultCommand(new RunCommand(() -> elevator.set2(secondary.getLeftTriggerAxis()-secondary.getRightTriggerAxis()), elevator));
+    elevator.setDefaultCommand(new RunCommand(() -> elevator.set2(secondary.getRightTriggerAxis()-secondary.getLeftTriggerAxis()), elevator));
 
     // secondary.axisGreaterThan(2, 0.05).whileTrue(new RunCommand(() -> elevator.down2(secondary.getLeftTriggerAxis()), elevator).repeatedly()).onFalse(new RunCommand(() -> elevator.stop2(), elevator));
     // secondary.axisGreaterThan(3, 0.05).whileTrue(new RunCommand(() -> elevator.up2(secondary.getRightTriggerAxis()), elevator).repeatedly()).onFalse(new RunCommand(() -> elevator.stop2(), elevator));
     
-    secondary.back().onTrue(elevator.setSoftLimits(true)).onFalse(elevator.setSoftLimits(false));
+    // secondary.back().onTrue(elevator.setSoftLimits(false)).onFalse(elevator.setSoftLimits(true));
 
 /* //---------------------------------------------------------------------------------------------------------------------------------
 

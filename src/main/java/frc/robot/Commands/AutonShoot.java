@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import static frc.robot.Constants.RobotConstants.intakeFeedSpeed;
+import static frc.robot.Constants.RobotConstants.shooterAutonSpeed;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -19,7 +20,7 @@ public class AutonShoot extends SequentialCommandGroup {
   public AutonShoot(Intake intake) {
     this.intake = intake;
     
-    addCommands(intake.startShooter(55)); //was 55
+    addCommands(intake.startShooter(shooterAutonSpeed)); //was 55
     addCommands(intake.set(intakeFeedSpeed));
     addCommands(new WaitCommand(0.25));
     addCommands(intake.stop());
