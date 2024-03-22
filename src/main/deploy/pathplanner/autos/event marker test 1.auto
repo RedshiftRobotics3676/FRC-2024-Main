@@ -1,0 +1,187 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 6.67
+    },
+    "rotation": 60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "arm mid"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter start"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake 0.25 sec"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooter stop"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "event test"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intake out"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1 to center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake 0.25 sec"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shooter stop"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "center to 2"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2 to center"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake 0.25 sec"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shooter stop"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "center to 3"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 to center"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake 0.25 sec"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shooter stop"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "test",
+  "choreoAuto": false
+}

@@ -10,22 +10,31 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.ColorSensorV3;
+import com.ctre.phoenix6.sim.ChassisReference;
+import com.ctre.phoenix6.sim.TalonFXSimState;
+// import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.math.system.plant.DCMotor;
+// import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.IntakeOut;
+
 import static frc.robot.Constants.IntakeConstants.*;
 
 public class Intake extends SubsystemBase {
   private TalonSRX intakeMotor;
   private TalonFX shooterMotor;
 
-  private ColorSensorV3 colorSensor;
+  private TalonFXSimState shooterSim;
+
+  private FlywheelSim flywheelSim;
+
+  // private ColorSensorV3 colorSensor;
 
   // private TalonSRXSimCollection intakeSim;
   // private TalonFXSimState shooterSim;
@@ -43,7 +52,12 @@ public class Intake extends SubsystemBase {
 
     shooterMotor.getConfigurator().apply(kShooterConfigs);
 
-    colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    shooterSim = shooterMotor.getSimState();
+    shooterSim.Orientation = ChassisReference.Clockwise_Positive;
+
+    flywheelSim = new FlywheelSim(DCMotor.getFalcon500(1), 1, 0.01);
+
+    // colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
     // TalonFX Request type to control the shooter motor
     // dutyCycleOut = new DutyCycleOut(-0.6).withEnableFOC(false).withOverri deBrakeDurNeutral(true);
@@ -75,38 +89,47 @@ public class Intake extends SubsystemBase {
                   () -> intakeMotor.set(ControlMode.PercentOutput, 0)); // Runnable to stop the intake motor when the command is interupted
   }
 
-  public Command inAutoStop(double speed/*, Timer t (should be passed, not created each call) */) {
-    return new FunctionalCommand(
-      () -> {
-          intakeMotor.set(ControlMode.PercentOutput, speed);
-      }, 
-      () -> {
-        // intakeMotor.set(ControlMode.PercentOutput, speed);
-        //  Write control code here
-        /*  I recommend this for ending the loop - Patrick
-            if(colorSensor.getProximity() > 150 && !timer.hasElapsed(1)) {
-              timer.start();
-              intakeMotor.set(ControlMode.PercentOutput, -0.25);
-            }
-        */
-      }, 
-      (interrupted) -> {
-        Timer timer = new Timer();
-        timer.start();
-        //BAD BAD BAD, gets whole robot stuck in loop
-        while (colorSensor.getProximity() < 150 && timer.get() < 1) {
-          intakeMotor.set(ControlMode.PercentOutput, -0.25);
-        }
-        // Only keep this line!
-        intakeMotor.set(ControlMode.PercentOutput, 0);
-      }, 
-      () -> {
-          // return t.hasElapsed(1);
-          return colorSensor.getProximity() > 150;
-      }, 
-      this
-    );
+  public Command inThenOut(double speed) {
+    return runEnd(() -> intakeMotor.set(ControlMode.PercentOutput, speed), // Runnable to run the intake motor
+                  () -> new IntakeOut(this)); // Runnable to stop the intake motor when the command is interupted
   }
+
+  public Command stop() {
+    return runOnce(() -> intakeMotor.set(ControlMode.PercentOutput, 0)); // Runnable to stop the intake motor
+  }
+
+  // public Command inAutoStop(double speed/*, Timer t (should be passed, not created each call) */) {
+  //   return new FunctionalCommand(
+  //     () -> {
+  //         intakeMotor.set(ControlMode.PercentOutput, speed);
+  //     }, 
+  //     () -> {
+  //       // intakeMotor.set(ControlMode.PercentOutput, speed);
+  //       //  Write control code here
+  //       /*  I recommend this for ending the loop - Patrick
+  //           if(colorSensor.getProximity() > 150 && !timer.hasElapsed(1)) {
+  //             timer.start();
+  //             intakeMotor.set(ControlMode.PercentOutput, -0.25);
+  //           }
+  //       */
+  //     }, 
+  //     (interrupted) -> {
+  //       Timer timer = new Timer();
+  //       timer.start();
+  //       //BAD BAD BAD, gets whole robot stuck in loop
+  //       while (colorSensor.getProximity() < 150 && timer.get() < 1) {
+  //         intakeMotor.set(ControlMode.PercentOutput, -0.25);
+  //       }
+  //       // Only keep this line!
+  //       intakeMotor.set(ControlMode.PercentOutput, 0);
+  //     }, 
+  //     () -> {
+  //         // return t.hasElapsed(1);
+  //         return colorSensor.getProximity() > 150;
+  //     }, 
+  //     this
+  //   );
+  // }
 
   public Command shoot(int speed) {
     return new FunctionalCommand(
@@ -130,6 +153,31 @@ public class Intake extends SubsystemBase {
         () -> {
             // This command never finishes on its own, but it can be interrupted
             return false;
+        },
+        this // Subsytem requirement of the intake
+    );
+  }
+
+  /** Starts the shooter and stops it when interuppted <p> Does not automatically feed the note like Intake.shoot() */
+  public Command shootNoIntake(double speed) {
+    return runEnd(() -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)),
+                  () -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)));
+  }
+
+  public Command startShooter(int speed) {
+    return new FunctionalCommand(
+        () -> {
+            // Start the shooter motor at full speed
+            shooterMotor.setControl(motionMagicVelocity.withVelocity(speed));
+        },
+        () -> {
+
+        },
+        (interrupted) -> {
+
+        },
+        () -> {
+            return shooterMotor.getVelocity().getValue() >= (speed - 5); //FIXME changed this to 5 before comp thursday, was 10 when testing auton before but now shooter pids are tuned so it should work better this way
         },
         this // Subsytem requirement of the intake
     );
@@ -167,16 +215,30 @@ public class Intake extends SubsystemBase {
     return runOnce(() -> shooterMotor.setControl(motionMagicVelocity.withVelocity(speed)));
   }
 
-  public boolean checkColorSensor() {
-    return colorSensor.getProximity() > 150;
+  public Command stopShooter() {
+    return runOnce(() -> shooterMotor.setControl(motionMagicVelocity.withVelocity(0)));
   }
+
+  // public boolean checkColorSensor() {
+  //   return colorSensor.getProximity() > 150;
+  // }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("colorProx", colorSensor.getProximity());
+    // SmartDashboard.putNumber("colorProx", colorSensor.getProximity());
 
     SmartDashboard.putNumber("intake stator current", intakeMotor.getStatorCurrent());
     SmartDashboard.putNumber("intake supply current", intakeMotor.getSupplyCurrent());
+
+    SmartDashboard.putNumber("shooter RPS", shooterMotor.getVelocity().getValueAsDouble());
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    flywheelSim.setInput(shooterMotor.getMotorVoltage().getValueAsDouble());
+    flywheelSim.update(0.02);
+
+    shooterSim.setRotorVelocity(flywheelSim.getAngularVelocityRPM() / 60);
   }
 }

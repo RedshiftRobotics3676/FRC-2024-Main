@@ -7,13 +7,23 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotionMagicIsRunningValue;
+import com.ctre.phoenix6.sim.CANcoderSimState;
+import com.ctre.phoenix6.sim.ChassisReference;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
-import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import static frc.robot.Constants.ArmConstants.*;
 
 import java.util.ArrayList;
@@ -30,6 +40,36 @@ public class Arm extends SubsystemBase {
   private double lastSetPos = 0;
 
   private ArrayList<Double> array;
+
+  private TalonFXSimState armLeaderSim;
+  private TalonFXSimState armFollowerSim;
+
+  private CANcoderSimState canCoderSim;
+
+  private SingleJointedArmSim armSim = new SingleJointedArmSim(
+    DCMotor.getFalcon500(1), 
+    174.2222222222222, 
+    SingleJointedArmSim.estimateMOI(0.75, 5), 
+    0.75, 
+    0, 
+    Units.rotationsToRadians(0.255), 
+    true, 
+    Units.rotationsToRadians(0));
+
+  // Create a Mechanism2d display of an Arm with a fixed ArmTower and moving Arm.
+  private final Mechanism2d m_mech2d = new Mechanism2d(60, 60);
+  private final MechanismRoot2d m_armPivot = m_mech2d.getRoot("ArmPivot", 30, 30);
+  private final MechanismLigament2d m_armTower =
+      m_armPivot.append(new MechanismLigament2d("ArmTower", 30, -90));
+  private final MechanismLigament2d m_arm =
+      m_armPivot.append(
+          new MechanismLigament2d(
+              "Arm",
+              30,
+              0,//Units.radiansToDegrees(armSim.getAngleRads()),
+              6,
+              new Color8Bit(Color.kYellow)));
+
   
   /** Creates a new Arm. */
   public Arm() {
@@ -47,6 +87,20 @@ public class Arm extends SubsystemBase {
 
     canCoder = new CANcoder(kArmCanCoderPort);
     canCoder.getConfigurator().apply(kArmCANCoderConfigs);
+
+    armLeaderSim = armLeader.getSimState();
+    armFollowerSim = armFollower.getSimState();
+
+    canCoderSim = canCoder.getSimState();
+
+    armLeaderSim.Orientation = ChassisReference.CounterClockwise_Positive;
+    armFollowerSim.Orientation = ChassisReference.Clockwise_Positive;
+
+    canCoderSim.Orientation = ChassisReference.Clockwise_Positive;
+
+    // Put Mechanism 2d to SmartDashboard
+    SmartDashboard.putData("Arm Sim", m_mech2d);
+    m_armTower.setColor(new Color8Bit(Color.kBlue));
 
     // double[] helperArray = new double[50];
     // Arrays.fill(helperArray, 0.035);
@@ -99,8 +153,8 @@ public class Arm extends SubsystemBase {
 
                 },
                 () -> {
-                  // return canCoder.getAbsolutePosition().getValueAsDouble() > position - 0.005 && canCoder.getAbsolutePosition().getValueAsDouble() < position + 0.005;
-                  return armLeader.getMotionMagicIsRunning().getValue().equals(MotionMagicIsRunningValue.Enabled);
+                  return canCoder.getAbsolutePosition().getValueAsDouble() > position - 0.005 && canCoder.getAbsolutePosition().getValueAsDouble() < position + 0.005;
+                  // return armLeader.getMotionMagicIsRunning().getValue().equals(MotionMagicIsRunningValue.Enabled);
                 },
                 this);
   }
@@ -152,4 +206,18 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Arm Position", canCoder.getAbsolutePosition().getValue());
   }
+
+  @Override
+    public void simulationPeriodic() {
+      armSim.setInput(armLeader.getMotorVoltage().getValueAsDouble());
+      armSim.update(0.02);
+
+      armLeaderSim.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(armSim.getVelocityRadPerSec()) / 60);
+      armFollowerSim.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(armSim.getVelocityRadPerSec()) / 60);
+
+      canCoderSim.setRawPosition(Units.radiansToRotations(armSim.getAngleRads()) - 0.192383);
+
+      m_arm.setAngle(Units.radiansToDegrees(armSim.getAngleRads()));
+
+    }
 }

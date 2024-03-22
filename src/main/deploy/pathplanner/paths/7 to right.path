@@ -1,0 +1,104 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.023582970242865,
+        "y": 2.2989976749184273
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.428577011000178,
+        "y": 1.3221703366483653
+      },
+      "isLocked": false,
+      "linkedName": "right pickup 7"
+    },
+    {
+      "anchor": {
+        "x": 3.9189347609464464,
+        "y": 2.417400988648132
+      },
+      "prevControl": {
+        "x": 5.339774525702899,
+        "y": 1.5293761356753486
+      },
+      "nextControl": {
+        "x": 2.46675795224171,
+        "y": 3.325011494088593
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0081866317578805,
+        "y": 4.588128407026045
+      },
+      "prevControl": {
+        "x": 2.5111453965189128,
+        "y": 3.5357453503220153
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right speaker start"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "stop slowly",
+      "minWaypointRelativePos": 1.95,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 360.0
+      }
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "start shooter",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooter start"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.55,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -60.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "right speaker start",
+  "previewStartingState": {
+    "rotation": 24.94390526342458,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

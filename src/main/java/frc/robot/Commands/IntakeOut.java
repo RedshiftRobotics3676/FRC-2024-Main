@@ -4,6 +4,10 @@
 
 package frc.robot.Commands;
 
+import static frc.robot.Constants.RobotConstants.intakeOutSpeed;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Subsystems.Intake;
@@ -19,6 +23,7 @@ public class IntakeOut extends ParallelDeadlineGroup {
     this.intake = intake;
     // addRequirements(intake);
     
-    addCommands(intake.out(0.25));
+    addCommands(intake.out(intakeOutSpeed));
+    addCommands(new InstantCommand(() -> SmartDashboard.putBoolean("intake out", true)));
   }
 }

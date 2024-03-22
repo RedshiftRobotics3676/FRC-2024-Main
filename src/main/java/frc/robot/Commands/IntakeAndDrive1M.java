@@ -4,6 +4,9 @@
 
 package frc.robot.Commands;
 
+import static frc.robot.Constants.RobotConstants.armDownPos;
+import static frc.robot.Constants.RobotConstants.intakeInSpeed;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -29,8 +32,8 @@ public class IntakeAndDrive1M extends ParallelDeadlineGroup {
     // addRequirements(drive);
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    addCommands(arm.setArmPositionEnd(0.00));
-    addCommands(intake.in(0.6));
+    addCommands(arm.setArmPositionEnd(armDownPos));
+    addCommands(intake.in(intakeInSpeed));
     addCommands(drive.driveRobotRelativeCommand(new ChassisSpeeds(1, 0, 0)));
     // addCommands(new SequentialCommandGroup(new WaitCommand(0.9), arm.setArmPosition(0.035)));
     // addCommands(new SequentialCommandGroup(new WaitCommand(0.9), intake.set(0)));

@@ -1,0 +1,97 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 4.43
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "begin auton"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right to 8"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "8 to right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right to 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 to center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "center to 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2 to left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "left to 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1 to left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "left speaker start",
+  "choreoAuto": false
+}

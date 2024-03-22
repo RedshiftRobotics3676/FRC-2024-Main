@@ -10,13 +10,30 @@
       }
     },
     "Other Devices": {
-      "window": {
-        "visible": false
-      }
-    },
-    "Timing": {
-      "window": {
-        "visible": false
+      "CANCoder (v6)[43]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Pigeon 2 (v6)[1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[32]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[41]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[41]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
@@ -24,6 +41,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Pose": "Field2d",
+      "/SmartDashboard/Arm Sim": "Mechanism2d",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Module 0": "Mechanism2d",
       "/SmartDashboard/Module 1": "Mechanism2d",
@@ -42,19 +60,87 @@
         "height": 8.210550308227539,
         "left": 150,
         "right": 2961,
+        "robotPose": {
+          "arrowWeight": 0.5,
+          "length": 0.8299999833106995,
+          "style": "Box/Image",
+          "weight": 1.0,
+          "width": 0.8299999833106995
+        },
         "top": 79,
         "width": 16.541748046875,
+        "window": {
+          "name": "robot",
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Arm Sim": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Module 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Module 1": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Module 2": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Module 3": {
         "window": {
           "visible": true
         }
       }
     }
   },
-  "NetworkTables Info": {
-    "visible": true
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "PathPlanner": {
+        "double[]##v_/PathPlanner/targetPose": {
+          "open": true
+        },
+        "open": true
+      },
+      "Pose": {
+        "double[]##v_/Pose/robotPose": {
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
+        "open": true
+      }
+    }
   },
-  "NetworkTables View": {
-    "visible": false
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      }
+    },
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {
@@ -66,12 +152,45 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 338
+          "height": 0
         }
       ],
       "window": {
         "visible": false
       }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": -46,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/auton time"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/auton timer"
+            }
+          ]
+        }
+      ]
     }
   }
 }

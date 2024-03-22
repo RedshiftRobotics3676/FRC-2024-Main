@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
@@ -20,6 +21,37 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 public final class Constants {
     public static class RobotConstants {
         public static final double LOOP_PERIOD_SECONDS = 0.002; 
+
+        /** Shooter flywheel speed used for scoring in amp */
+        public static final int shooterSlowSpeed = 25;
+        /** Shooter flywheel speed used for scoring in speaker */
+        public static final int shooterNormalSpeed = 55;
+        /** Shooter flywheel speed used for shooting across the field */
+        public static final int shooterFastSpeed = 65;
+        //* Shooter flywheel speed used during auton */
+        public static final int shooterFastAuton = 55;
+
+        /** Intake speed for feeding notes back out of the intake */ 
+        public static final double intakeOutSpeed = 0.25;
+        /** Intake speed for picking up notes */ 
+        public static final double intakeInSpeed = 0.6;
+        /** Intake speed for feeding notes into the shooter */ 
+        public static final double intakeFeedSpeed = 1;
+
+        /** Arm position all the way down */
+        public static final double armDownPos = 0.000;
+        /** Arm position for driveing and shooting in speaker */
+        public static final double armDefaultPos = 0.035;
+        /** Arm position for shooting across the field */
+        public static final double armMidPos = 0.075;
+        /** Arm position for scoring in amp */
+        public static final double armHighPos = 0.255;
+
+        /** Arm position similar to where it would be for starting configuration <p> Only used for testing auton */
+        public static final double armStartingPos = 0.225;
+
+
+
     }
 
     public static class IntakeConstants {
@@ -29,13 +61,18 @@ public final class Constants {
         private static final MotorOutputConfigs kShooterOutputConfigs = new MotorOutputConfigs()
             .withInverted(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake);
+
+            private static final Slot0Configs kShooterGains = new Slot0Configs()
+                .withKP(0.123).withKI(0.0).withKD(0.005)
+                .withKS(0).withKV(0.12).withKA(0.0);
         
-        private static final Slot0Configs kShooterGains = new Slot0Configs()
+        /** OLD - DONT USE THESE USE SLOT 0 */
+        private static final Slot1Configs kOLDShooterGains = new Slot1Configs()
             .withKP(0.375).withKI(0.0).withKD(0.0)
             .withKS(3.25).withKV(0.0).withKA(0.0);
 
         private static final MotionMagicConfigs kShooterMotionMagicConfigs = new MotionMagicConfigs()
-            .withMotionMagicAcceleration(100)
+            .withMotionMagicAcceleration(150)
             .withMotionMagicCruiseVelocity(0)
             .withMotionMagicExpo_kA(0)
             .withMotionMagicExpo_kV(0)
@@ -44,6 +81,7 @@ public final class Constants {
         public static final TalonFXConfiguration kShooterConfigs = new TalonFXConfiguration()
             .withMotorOutput(kShooterOutputConfigs)
             .withSlot0(kShooterGains)
+            .withSlot1(kOLDShooterGains)
             .withMotionMagic(kShooterMotionMagicConfigs);
 
         
@@ -95,7 +133,7 @@ public final class Constants {
 
 
         private static final MagnetSensorConfigs kMagnetSensorConfigs = new MagnetSensorConfigs()
-            .withMagnetOffset(-0.39453125)
+            .withMagnetOffset(-0.0576171875)
             .withSensorDirection(SensorDirectionValue.Clockwise_Positive) // was CounterClockwise_Positive
             .withAbsoluteSensorRange(AbsoluteSensorRangeValue.Signed_PlusMinusHalf);
 
@@ -119,7 +157,7 @@ public final class Constants {
         public static final int kElevatorPort = 51;
 
         private static final MotorOutputConfigs kElevatorOutputConfigs = new MotorOutputConfigs()
-            .withInverted(InvertedValue.Clockwise_Positive)
+            .withInverted(InvertedValue.CounterClockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake);
         
         private static final Slot0Configs kElevatorGains = new Slot0Configs()
@@ -127,11 +165,11 @@ public final class Constants {
             .withKS(0.0).withKV(0.0).withKA(0.0)
             .withKG(0.0).withGravityType(GravityTypeValue.Elevator_Static);
 
-        private static final SoftwareLimitSwitchConfigs kElevatorSoftLimitSwitch = new SoftwareLimitSwitchConfigs()
+        public static final SoftwareLimitSwitchConfigs kElevatorSoftLimitSwitch = new SoftwareLimitSwitchConfigs()
             .withForwardSoftLimitEnable(true)
-            .withForwardSoftLimitThreshold(92)
+            .withForwardSoftLimitThreshold(335)
             .withReverseSoftLimitEnable(true)
-            .withReverseSoftLimitThreshold(0);
+            .withReverseSoftLimitThreshold(-5);
 
         private static final MotionMagicConfigs kElevatorMotionMagicConfigs = new MotionMagicConfigs()
             .withMotionMagicAcceleration(1)

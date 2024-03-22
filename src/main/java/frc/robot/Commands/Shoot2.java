@@ -21,7 +21,7 @@ public class Shoot2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.setShooter(75);
+    intake.setShooter(55);
     timer.start();
   }
 

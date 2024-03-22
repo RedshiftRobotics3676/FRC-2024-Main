@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import org.photonvision.EstimatedRobotPose;
+// import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -42,7 +42,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
     SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
 
-    private Optional<EstimatedRobotPose> estimatedPose = Optional.empty();
+    // private Optional<EstimatedRobotPose> estimatedPose = Optional.empty();
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
@@ -72,8 +72,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         publisher = NetworkTableInstance.getDefault().getStructArrayTopic("MyStates", SwerveModuleState.struct).publish();
 
 
-        Optional<Alliance> ally = DriverStation.getAlliance();
+        // Optional<Alliance> ally = DriverStation.getAlliance();
         BooleanSupplier flipped = () -> {
+            Optional<Alliance> ally = DriverStation.getAlliance();
             if (ally.isPresent()) {
                 return ally.get() == Alliance.Red;
             }
@@ -82,17 +83,20 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             }
         };
 
+        SmartDashboard.putBoolean("auton flipped for red", flipped.getAsBoolean());
+
         AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::driveRobotRelative1, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(3, 0, 0), // Translation PID constants
-            new PIDConstants(5, 0.0, 0), // Rotation PID constants
+            new PIDConstants(3, 0.5, 0.5), // Translation PID constants
+            new PIDConstants(7, 0.5, 0), // Rotation PID constants
             5.55, // Max module speed, in m/s
             0.377, // Drive base radius in meters. Distance from robot center to furthest module.
             new ReplanningConfig() // Default path replanning config. See the API for the options here
+            //RobotConstants.LOOP_PERIOD_SECONDS
         ),
         flipped, // true for red side, false for blue side
         this // Reference to this subsystem to set requirements
@@ -183,9 +187,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         );
     } */
 
-    public void setEstimatedPose(Optional<EstimatedRobotPose> estimatedPose) {
-        this.estimatedPose = estimatedPose;
-    }
+    // public void setEstimatedPose(Optional<EstimatedRobotPose> estimatedPose) {
+    //     this.estimatedPose = estimatedPose;
+    // }
 
     @Override
     public void periodic() {
@@ -196,6 +200,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         SmartDashboard.putNumber("BR Angle", Modules[3].getCANcoder().getAbsolutePosition().getValueAsDouble());
 
         // if (estimatedPose.isPresent()) {
+        //     // if (estimatedPose.get().estimatedPose.toPose2d().relativeTo()) {}
         //     addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds); 
         // }
     }

@@ -1,0 +1,86 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.930642280685416,
+        "y": 5.867129109436536
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.032864801818214,
+        "y": 6.643586244744104
+      },
+      "isLocked": false,
+      "linkedName": "new pickup 5"
+    },
+    {
+      "anchor": {
+        "x": 3.25,
+        "y": 6.75
+      },
+      "prevControl": {
+        "x": 5.25,
+        "y": 6.75
+      },
+      "nextControl": {
+        "x": 2.250000000000002,
+        "y": 6.75
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.75,
+        "y": 6.65
+      },
+      "prevControl": {
+        "x": 0.9110173270683883,
+        "y": 6.928890191381386
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "left speaker start"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "start shooter",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooter start"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.55,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 60.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "left speaker start",
+  "previewStartingState": {
+    "rotation": -15.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

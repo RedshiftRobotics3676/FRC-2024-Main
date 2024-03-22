@@ -1,0 +1,104 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.75,
+        "y": 6.65
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.212019382530518,
+        "y": 7.084120444167338
+      },
+      "isLocked": false,
+      "linkedName": "left speaker start"
+    },
+    {
+      "anchor": {
+        "x": 5.7,
+        "y": 6.47
+      },
+      "prevControl": {
+        "x": 4.009629803994132,
+        "y": 6.922933328929416
+      },
+      "nextControl": {
+        "x": 6.665925826289068,
+        "y": 6.211180954897475
+      },
+      "isLocked": true,
+      "linkedName": "left to 5 #1"
+    },
+    {
+      "anchor": {
+        "x": 7.930642280685416,
+        "y": 5.867129109436536
+      },
+      "prevControl": {
+        "x": 6.964716454396347,
+        "y": 6.125948154539056
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "new pickup 5"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": -15.0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.25,
+      "constraints": {
+        "maxVelocity": 5.55,
+        "maxAcceleration": 5.55,
+        "maxAngularVelocity": 120.0,
+        "maxAngularAcceleration": 360.0
+      }
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 1.3,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "auton intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.55,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -15.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "left speaker start",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

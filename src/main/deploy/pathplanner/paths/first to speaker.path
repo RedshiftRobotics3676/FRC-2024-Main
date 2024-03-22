@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.9455461987847067,
-        "y": 6.93
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9751470272171323,
-        "y": 6.3345772845391854
+        "x": 1.9455461987847067,
+        "y": 6.403841951215439
       },
       "isLocked": false,
       "linkedName": "pickup first note"
     },
     {
       "anchor": {
-        "x": 1.2745940876497153,
-        "y": 5.555088802485298
+        "x": 1.35,
+        "y": 5.53
       },
       "prevControl": {
-        "x": 1.5903362575955933,
-        "y": 5.791895429944707
+        "x": 1.665742169945878,
+        "y": 5.766806627459409
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "old",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

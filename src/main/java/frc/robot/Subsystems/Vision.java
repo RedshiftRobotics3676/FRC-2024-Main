@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonUtils;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 
@@ -24,7 +23,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotConstants;
 
 public class Vision extends SubsystemBase {
-  private PhotonCamera camera;
+  private PhotonCamera driverCam;
+
+  private PhotonCamera apriltagCam;
   private AprilTagFieldLayout aprilTagFieldLayout;
   
   //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
@@ -33,7 +34,7 @@ public class Vision extends SubsystemBase {
   PhotonPoseEstimator photonPoseEstimator;
 
   // Constants such as camera and target height stored.
-  final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(13);
+  final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(14.25);
   final double TARGET_HEIGHT_METERS = Units.feetToMeters(5); //FIXME find speaker tag height
   // Angle between horizontal and the camera.
   final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
@@ -52,12 +53,15 @@ public class Vision extends SubsystemBase {
 
   /** Creates a new Vision. */
   public Vision() {
-    camera = new PhotonCamera("lifecam");
+    driverCam = new PhotonCamera("lifecam");
+
+    apriltagCam = new PhotonCamera("arducam");
+
     aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
-    robotToCam = new Transform3d(new Translation3d(Units.inchesToMeters(-1), Units.inchesToMeters(-2), Units.inchesToMeters(13)), new Rotation3d(0, Units.degreesToRadians(25), Math.PI));
+    robotToCam = new Transform3d(new Translation3d(Units.inchesToMeters(-3/4), Units.inchesToMeters(-1), Units.inchesToMeters(14.25)), new Rotation3d(0, 0, Units.degreesToRadians(175)+0.265));
 
-    photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam);
+    photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, apriltagCam, robotToCam);
   }
 
   public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
@@ -68,7 +72,7 @@ public class Vision extends SubsystemBase {
   }
 
   public PhotonPipelineResult getPipelineResult() {
-    return camera.getLatestResult();
+    return apriltagCam.getLatestResult();
   }
 
   public double calcRotationSpeed(PhotonPipelineResult result, double defaultSpeed) {

@@ -1,0 +1,97 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.0081866317578805,
+        "y": 4.588128407026045
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.008186631757881,
+        "y": 2.856077599457168
+      },
+      "isLocked": false,
+      "linkedName": "right speaker start"
+    },
+    {
+      "anchor": {
+        "x": 4.5,
+        "y": 3.4
+      },
+      "prevControl": {
+        "x": 3.59369221296335,
+        "y": 2.9773817382593
+      },
+      "nextControl": {
+        "x": 5.40630778703665,
+        "y": 3.822618261740699
+      },
+      "isLocked": false,
+      "linkedName": "6 to right #1"
+    },
+    {
+      "anchor": {
+        "x": 7.8,
+        "y": 4.11
+      },
+      "prevControl": {
+        "x": 5.8,
+        "y": 4.11
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "pickup 6"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 60.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.35,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 1.5,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "auton intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.55,
+    "maxAcceleration": 6.5,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 0.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "right speaker start",
+  "previewStartingState": {
+    "rotation": -60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

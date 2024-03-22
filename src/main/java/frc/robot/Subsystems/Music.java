@@ -5,7 +5,6 @@
 package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -46,7 +45,7 @@ public class Music extends SubsystemBase {
     chooser.addOption("Super Mario 64","songs\\super mario 64.chrp");
     chooser.addOption("Viva La Vida","songs\\viva la vida.chrp");
     
-    SmartDashboard.putData(chooser);
+    // SmartDashboard.putData(chooser);
   }
 
   /* public void loadSong(song song) {

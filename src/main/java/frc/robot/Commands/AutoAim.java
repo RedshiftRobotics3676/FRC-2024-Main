@@ -14,7 +14,7 @@ import frc.robot.Subsystems.Vision;
 
 public class AutoAim extends Command {
   private final CommandSwerveDrivetrain drivetrain;
-  private final Arm arm;
+  // private final Arm arm;
   private final Vision vision;
 
   private final CommandXboxController driver;
@@ -25,7 +25,7 @@ public class AutoAim extends Command {
   public AutoAim(CommandSwerveDrivetrain drivetrain, Arm arm, Vision vision, CommandXboxController driver, double maxSpeed, double maxAngularRate) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drivetrain = drivetrain;
-    this.arm = arm;
+    // this.arm = arm;
     this.vision = vision;
     this.driver = driver;
     this.maxSpeed = maxSpeed;

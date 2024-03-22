@@ -19,6 +19,6 @@ public class Shoot extends ParallelDeadlineGroup {
     this.intake = intake;
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    addCommands(intake.shoot(65));
+    addCommands(intake.shoot(55));
   }
 }

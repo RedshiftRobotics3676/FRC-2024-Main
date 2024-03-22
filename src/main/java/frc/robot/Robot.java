@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.RobotConstants.armDefaultPos;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -12,6 +16,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Timer autonTimer;
 
   Robot(double period) {
     super(period);
@@ -20,6 +25,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    autonTimer = new Timer();
   }
 
   @Override
@@ -31,6 +37,9 @@ public class Robot extends TimedRobot {
     // m_robotContainer.leds.updateLEDs();
     // SmartDashboard.putNumber("FL Module rotation?",m_robotContainer.drivetrain.getModule(0).getPosition(true).angle.getRotations());
     // m_robotContainer.drivetrain.getModule(0).getPosition(true).angle.getDegrees();
+
+      // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
+
   }
 
   @Override
@@ -44,6 +53,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    autonTimer.restart();
     m_robotContainer.arm.removeDefaultCommand();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -55,18 +65,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    SmartDashboard.putNumber("auton timer", autonTimer.get());
     // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
   }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+    autonTimer.stop();
+  }
 
   @Override
   public void teleopInit() {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.arm.setDefaultCommand(m_robotContainer.arm.setArmPosition(0.035));
+    
+    m_robotContainer.arm.setDefaultCommand(m_robotContainer.arm.setArmPosition(armDefaultPos));
   }
 
   @Override
