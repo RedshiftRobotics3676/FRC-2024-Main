@@ -242,10 +242,14 @@ public class RobotContainer {
     secondary.a().whileTrue(intake.in(intakeInSpeed));
     secondary.b().whileTrue(intake.out(intakeOutSpeed));
 
-    secondary.rightBumper().whileTrue(intake.in(intakeFeedSpeed));
+    // secondary.rightBumper().whileTrue(intake.in(intakeFeedSpeed));
 
     secondary.x().whileTrue(intake.shootNoIntake(shooterNormalSpeed));
     secondary.y().whileTrue(intake.shootNoIntake(shooterFastSpeed));
+
+    secondary.x().and(secondary.rightBumper()).whileTrue(intake.shoot(shooterNormalSpeed));
+    secondary.y().and(secondary.rightBumper()).whileTrue(intake.shoot(shooterFastSpeed));
+    
     // secondary.x().whileTrue(intake.shoot(55)); // was 65 with old pids
     // secondary.y().whileTrue(intake.shoot(65)); // was 75 with old pids
 

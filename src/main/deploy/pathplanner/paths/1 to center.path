@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.187680255419001,
-        "y": 6.310303885281644
+        "x": 2.5276958246224197,
+        "y": 6.166839256755436
       },
       "isLocked": false,
       "linkedName": "pickup 1"
@@ -20,8 +20,8 @@
         "y": 5.53
       },
       "prevControl": {
-        "x": 1.6653051734911994,
-        "y": 5.8453051734912
+        "x": 2.1626189406224983,
+        "y": 5.6438912877825755
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,19 +29,7 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.9,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 5.55,
-        "maxAcceleration": 2.5,
-        "maxAngularVelocity": 360.0,
-        "maxAngularAcceleration": 360.0
-      }
-    }
-  ],
+  "constraintZones": [],
   "eventMarkers": [
     {
       "name": "start shooter",
