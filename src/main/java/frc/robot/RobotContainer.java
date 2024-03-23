@@ -251,7 +251,7 @@ public class RobotContainer {
 
     secondary.leftBumper().whileTrue(intake.shoot(shooterSlowSpeed));
 
-    Trigger elevatorIsDown = new Trigger(() -> elevator.getPos() < 5);
+    Trigger elevatorIsDown = new Trigger(() -> elevator.getPos() < 16);
 
     secondary.povUp().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
     secondary.povLeft().and(elevatorIsDown).whileTrue(arm.setArmPosition(armMidPos));

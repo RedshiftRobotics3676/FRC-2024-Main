@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.930642280685416,
-        "y": 5.867129109436536
+        "x": 7.885445770891543,
+        "y": 5.870830972431175
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.497645610675838,
-        "y": 7.518610421836228
+        "x": 5.4524491008819655,
+        "y": 7.522312284830867
       },
       "isLocked": false,
       "linkedName": "new pickup 5"
@@ -63,7 +63,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
