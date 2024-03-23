@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 7.885445770891543,
-        "y": 7.3114046228092455
+        "x": 7.9446474277563945,
+        "y": 7.341005451241672
       },
       "prevControl": {
-        "x": 5.29735089427383,
-        "y": 6.585332756970791
+        "x": 5.356552551138681,
+        "y": 6.614933585403217
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.85,
+      "minWaypointRelativePos": 0.8,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 5.55,
@@ -63,14 +63,14 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 18.434948822921903,
-    "rotateFast": true
+    "rotation": 15.67,
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "center speaker start",

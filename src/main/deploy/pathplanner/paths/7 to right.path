@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.023582970242865,
-        "y": 2.2989976749184273
+        "x": 7.934780484945588,
+        "y": 2.308864617729237
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.428577011000178,
-        "y": 1.3221703366483653
+        "x": 5.339774525702901,
+        "y": 1.3320372794591748
       },
       "isLocked": false,
       "linkedName": "right pickup 7"
@@ -85,7 +85,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

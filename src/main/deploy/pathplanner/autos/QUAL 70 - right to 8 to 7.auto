@@ -1,0 +1,61 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7220452902444284,
+      "y": 4.4499912076747234
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "begin auton"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right to 8 outward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "8 to right outward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right to 7 outward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "7 to right outward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "right speaker start",
+  "choreoAuto": false
+}

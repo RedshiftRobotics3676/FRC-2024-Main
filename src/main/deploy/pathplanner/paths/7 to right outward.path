@@ -3,40 +3,62 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.557296653054846,
-        "y": 4.430257322053106
+        "x": 7.934780484945588,
+        "y": 2.308864617729237
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2037432624615723,
-        "y": 4.78381071264638
+        "x": 5.339774525702901,
+        "y": 1.3320372794591748
       },
       "isLocked": false,
-      "linkedName": "center pickup 3"
+      "linkedName": "right pickup 7"
     },
     {
       "anchor": {
-        "x": 1.35,
-        "y": 5.53
+        "x": 3.96826947500049,
+        "y": 1.7957835915671831
       },
       "prevControl": {
-        "x": 1.703553390593274,
-        "y": 5.176446609406726
+        "x": 5.667613209681313,
+        "y": 1.1768173305907244
+      },
+      "nextControl": {
+        "x": 2.4783611105683763,
+        "y": 2.3384654461616616
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7220452902444284,
+        "y": 4.4499912076747234
+      },
+      "prevControl": {
+        "x": 1.0377874601903068,
+        "y": 2.2397960180535748
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "speaker start"
+      "linkedName": "right speaker start"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
-      "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.75,
-      "maxWaypointRelativePos": 1.0,
+      "name": "stop slowly",
+      "minWaypointRelativePos": 1.95,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 5.55,
-        "maxAcceleration": 3.5,
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
       }
@@ -50,12 +72,6 @@
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "intake out"
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -74,14 +90,14 @@
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0,
+    "velocity": 0.0,
+    "rotation": -60.0,
     "rotateFast": true
   },
   "reversed": false,
-  "folder": "center speaker start",
+  "folder": "right speaker start",
   "previewStartingState": {
-    "rotation": -45.0,
+    "rotation": 24.94390526342458,
     "velocity": 0
   },
   "useDefaultConstraints": true
