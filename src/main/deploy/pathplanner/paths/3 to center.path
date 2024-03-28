@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.557296653054846,
-        "y": 4.430257322053106
+        "x": 2.4780599650965907,
+        "y": 4.126755829813275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2037432624615723,
-        "y": 4.78381071264638
+        "x": 1.6527087991339355,
+        "y": 4.568908240150412
       },
       "isLocked": false,
       "linkedName": "center pickup 3"
@@ -20,8 +20,8 @@
         "y": 5.53
       },
       "prevControl": {
-        "x": 1.703553390593274,
-        "y": 5.176446609406726
+        "x": 1.5937551444223175,
+        "y": 5.055275891521263
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,7 +36,7 @@
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 5.55,
-        "maxAcceleration": 3.5,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
       }
@@ -53,12 +53,6 @@
             {
               "type": "named",
               "data": {
-                "name": "intake out"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
                 "name": "shooter start"
               }
             }
@@ -69,19 +63,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 4.75,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": true
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "center speaker start",
   "previewStartingState": {
-    "rotation": -45.0,
+    "rotation": -13.5,
     "velocity": 0
   },
   "useDefaultConstraints": true

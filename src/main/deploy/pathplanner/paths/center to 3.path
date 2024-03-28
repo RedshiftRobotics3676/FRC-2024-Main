@@ -8,32 +8,38 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7035533905932738,
-        "y": 5.176446609406726
+        "x": 1.3874173529316538,
+        "y": 4.804722858996885
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "speaker start"
     },
     {
       "anchor": {
-        "x": 2.557296653054846,
-        "y": 4.430257322053106
+        "x": 2.4780599650965907,
+        "y": 4.126755829813275
       },
       "prevControl": {
-        "x": 2.142885055000881,
-        "y": 4.834801977296262
+        "x": 1.7706161085571723,
+        "y": 4.215186311880703
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "center pickup 3"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -5.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "parallel",
         "data": {
@@ -51,13 +57,13 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 4.75,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": -5.0,
     "rotateFast": false
   },
   "reversed": false,

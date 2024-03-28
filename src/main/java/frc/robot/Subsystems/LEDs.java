@@ -90,7 +90,7 @@ public void showIndex(int i) {
     int phase = 0;
     for (int i = 0; i < ledLength; i++) {
         // Calculate brightness using a sine wave pattern
-        int brightness = (int) (255 - ((0.2*Math.sin(i + phase + m_position) + 1) / 2 * 255));
+        int brightness = (int) (255 - ((0.5*Math.sin(i + phase + m_position) + 1) / 2 * 255));
         // Set the color and brightness of the LED
         m_buffer.setHSV(i, hue, 255, brightness); // Change the hue value to change the color
     }
