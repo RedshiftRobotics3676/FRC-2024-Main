@@ -44,7 +44,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1 to center curve"
+            "pathName": "1 to center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "center to 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4 to center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auton shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "better center to 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "better 5 to center"
           }
         },
         {

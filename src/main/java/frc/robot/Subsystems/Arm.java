@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ArmConstants.*;
+import static frc.robot.Constants.RobotConstants.armDefaultPos;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -135,7 +136,7 @@ public class Arm extends SubsystemBase {
                   armFollower.setControl(follower);
                 },
                 () -> {
-                  armLeader.setControl(motionMagicVoltage.withPosition(0.035));
+                  armLeader.setControl(motionMagicVoltage.withPosition(armDefaultPos));
                   armFollower.setControl(follower);
                 });
   }

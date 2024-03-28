@@ -3,15 +3,15 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9193841464606024,
-        "y": 6.551650026376976
+        "x": 0.6431097477579587,
+        "y": 6.7095211113499165
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3523968483528224,
-        "y": 6.801650026376975
+        "x": 1.0761224496501787,
+        "y": 6.959521111349916
       },
-      "isLocked": true,
+      "isLocked": false,
       "linkedName": "left speaker start"
     },
     {
@@ -51,7 +51,19 @@
       "rotateFast": true
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.2,
+      "constraints": {
+        "maxVelocity": 5.55,
+        "maxAcceleration": 4.5,
+        "maxAngularVelocity": 120.0,
+        "maxAngularAcceleration": 180.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "intake",
@@ -73,14 +85,14 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "left speaker start",

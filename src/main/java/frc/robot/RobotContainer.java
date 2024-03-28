@@ -38,7 +38,7 @@ import frc.robot.Subsystems.Elevator;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.LEDs;
 import frc.robot.Subsystems.Music;
-import frc.robot.Subsystems.Vision;
+// import frc.robot.Subsystems.Vision;
 import frc.robot.generated.TunerConstants;
 import static frc.robot.Constants.RobotConstants.*;
 
@@ -84,7 +84,7 @@ public class RobotContainer {
 
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  Vision vision = new Vision();
+  // Vision vision = new Vision();
   Music music = new Music(drivetrain);
   LEDs leds = new LEDs();
   Arm arm = new Arm();
@@ -141,23 +141,25 @@ public class RobotContainer {
     // reset the field-centric heading on left bumper press
     driver.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
-    // driver.a().whileTrue(intake.in(0.6));
-    // driver.b().whileTrue(intake.out(0.25));
+    driver.a().whileTrue(intake.in(intakeInSpeed));
+    driver.b().whileTrue(intake.out(intakeOutSpeed));
 
-    // driver.x().whileTrue(intake.shoot(55));
-    // driver.y().whileTrue(intake.shoot(65));
+    driver.x().whileTrue(intake.shoot(shooterNormalSpeed));
+    driver.y().whileTrue(intake.shoot(shooterFastSpeed));
 
     /*
      * triggers for rotate 90
      * buttons for shooting across
      */
 
-    // driver.povUp().whileTrue(arm.setArmPosition(0.255));
-    // driver.povLeft().whileTrue(arm.setArmPosition(0.075));
-    // driver.povRight().whileTrue(arm.setArmPosition(0.035));
-    // driver.povDown().whileTrue(arm.setArmPosition(0.00));
+    Trigger elevatorIsDownDriver = new Trigger(() -> elevator.getPos() < 16);
 
-    // driver.start().whileTrue(arm.setArmPosition(0.225));
+    secondary.povUp().and(elevatorIsDownDriver).whileTrue(arm.setArmPosition(armHighPos));
+    secondary.povLeft().and(elevatorIsDownDriver).whileTrue(arm.setArmPosition(armMidPos));
+    secondary.povRight().and(elevatorIsDownDriver).whileTrue(arm.setArmPosition(armDefaultPos));
+    secondary.povDown().whileTrue(arm.setArmPosition(armDownPos));
+
+    driver.start().and(elevatorIsDownDriver).whileTrue(arm.setArmPosition(armStartingPos));
 
     Optional<Alliance> ally = DriverStation.getAlliance();
     Trigger redAlliance = new Trigger(() -> ally.isPresent() && ally.get() == Alliance.Red);
@@ -220,21 +222,21 @@ public class RobotContainer {
     //   )
     // );
 
-    driver.axisGreaterThan(3, 0.05).whileTrue( 
-      drivetrain.applyRequest(() -> 
-        driveWithAngle.withVelocityX(cubeInputs(-driver.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
-                      .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
-                      .withTargetDirection(new Rotation2d(Math.PI/2))
-      )
-    );
+    // driver.axisGreaterThan(3, 0.05).whileTrue( 
+    //   drivetrain.applyRequest(() -> 
+    //     driveWithAngle.withVelocityX(cubeInputs(-driver.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
+    //                   .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
+    //                   .withTargetDirection(new Rotation2d(Math.PI/2))
+    //   )
+    // );
 
-    driver.axisGreaterThan(2, 0.05).whileTrue( 
-      drivetrain.applyRequest(() -> 
-        driveWithAngle.withVelocityX(cubeInputs(-driver.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
-                      .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
-                      .withTargetDirection(new Rotation2d(-Math.PI/2))
-      )
-    );
+    // driver.axisGreaterThan(2, 0.05).whileTrue( 
+    //   drivetrain.applyRequest(() -> 
+    //     driveWithAngle.withVelocityX(cubeInputs(-driver.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
+    //                   .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
+    //                   .withTargetDirection(new Rotation2d(-Math.PI/2))
+    //   )
+    // );
 
 
     //---------------------------------------------------------------------------------------------------------------------------------
@@ -262,7 +264,7 @@ public class RobotContainer {
     secondary.povRight().and(elevatorIsDown).whileTrue(arm.setArmPosition(armDefaultPos));
     secondary.povDown().whileTrue(arm.setArmPosition(armDownPos));
 
-    // secondary.start().whileTrue(arm.setArmPosition(armStartingPos));
+    secondary.start().and(elevatorIsDown).whileTrue(arm.setArmPosition(armStartingPos));
 
     elevator.setDefaultCommand(new RunCommand(() -> elevator.set2(secondary.getRightTriggerAxis()-secondary.getLeftTriggerAxis()), elevator));
 

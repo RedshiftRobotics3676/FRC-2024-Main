@@ -16,24 +16,30 @@
     },
     {
       "anchor": {
-        "x": 7.875578828080734,
-        "y": 5.8609640296203676
+        "x": 7.964381313378012,
+        "y": 5.890564858052794
       },
       "prevControl": {
-        "x": 4.155741388405854,
-        "y": 7.064731052539028
+        "x": 4.244543873703132,
+        "y": 7.094331880971454
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "new pickup 5"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": -10.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.6,
+      "waypointRelativePos": 0.75,
       "command": {
         "type": "parallel",
         "data": {
@@ -51,14 +57,14 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -11.976132444203298,
-    "rotateFast": false
+    "rotation": -17.930000000000007,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "center speaker start",

@@ -16,27 +16,33 @@
     },
     {
       "anchor": {
-        "x": 7.8361110568375,
-        "y": 7.321271565620054
+        "x": 7.934780484945588,
+        "y": 7.35087239405248
       },
       "prevControl": {
-        "x": 5.248016180219786,
-        "y": 6.5951996997816
+        "x": 5.346685608327874,
+        "y": 6.624800528214026
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "center pickup 4"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 15.67,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 0.9,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 5.55,
-        "maxAcceleration": 2.5,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
       }
@@ -63,14 +69,14 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 15.67,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "center speaker start",

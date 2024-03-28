@@ -10,13 +10,20 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDs extends SubsystemBase {
   private final AddressableLED m_led;
   private final AddressableLEDBuffer m_buffer;
   private final int pwmPort = 0;
-  private final int ledLength = 350; //220
+  private final int ledLength = 104; //220
+
+  private static int counter = 0;
+
+  SendableChooser<String> chooser;
+
   /** Creates a new LEDs. */
   public LEDs() {
     m_led = new AddressableLED(pwmPort);
@@ -24,6 +31,13 @@ public class LEDs extends SubsystemBase {
     m_buffer = new AddressableLEDBuffer(ledLength);
 
     m_led.start();
+
+    chooser = new SendableChooser<String>();
+    chooser.setDefaultOption("Pulse Alliance Color", "Pulse Alliance Color");
+    chooser.addOption("Wave Alliance Color", "Wave Alliance Color");
+    chooser.addOption("Rainbow", "Rainbow");
+
+    SmartDashboard.putData(chooser);
   }
 
   public void updateLEDs() {
@@ -44,6 +58,12 @@ public class LEDs extends SubsystemBase {
     m_led.setData(m_buffer);
 }
 
+public void showIndex(int i) {
+  setSolidRGB(0, 0, 0);
+  m_buffer.setRGB(99, 255, 255, 255);
+  m_led.setData(m_buffer);
+}
+
   static int m_rainbowFirstPixelHue = 0;
   public void rainbow() {
     // For every pixel
@@ -62,6 +82,55 @@ public class LEDs extends SubsystemBase {
     m_led.setData(m_buffer);
   }
 
+  /** @param hue hue of main color from 0-180 */
+  public void waveHue(int hue) {
+    // Move the position in the direction
+    m_position -= 1;
+    
+    int phase = 0;
+    for (int i = 0; i < ledLength; i++) {
+        // Calculate brightness using a sine wave pattern
+        int brightness = (int) (255 - ((0.2*Math.sin(i + phase + m_position) + 1) / 2 * 255));
+        // Set the color and brightness of the LED
+        m_buffer.setHSV(i, hue, 255, brightness); // Change the hue value to change the color
+    }
+    // Increment the phase
+    phase = (phase + 1) % ledLength;
+    // Set the LED data
+    m_led.setData(m_buffer);
+  }
+
+  public void waveAllianceColor() {
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+        if (ally.get() == Alliance.Red) {
+            waveHue(0);
+        }
+        if (ally.get() == Alliance.Blue) {
+          waveHue(120);
+        }
+    }
+    else {
+      waveHue(70);
+    }
+  }
+
+
+  public void solidAllianceColor() {
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+        if (ally.get() == Alliance.Red) {
+            setSolidHSV(0, 255, 100);
+        }
+        if (ally.get() == Alliance.Blue) {
+          setSolidHSV(120, 255, 100);
+        }
+    }
+    else {
+      setSolidHSV(70, 255, 100);
+    }
+  }
+
   public void pulseAllianceColor() {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
@@ -75,6 +144,53 @@ public class LEDs extends SubsystemBase {
     else {
       pulseColorHSV2(30, 255, 255);
     }
+  }
+
+  
+  
+  public void runFromChooser() {
+    counter++;
+    if (chooser.getSelected() == "Rainbow") {
+      if (counter >= 15) {
+        counter = 0;
+        rainbow();
+      }
+    }
+    else if (chooser.getSelected() == "Pulse Alliance Color") {
+      if (counter >= 15) {
+        counter = 0;
+        pulseAllianceColor();
+      }
+    }
+    else if (chooser.getSelected() == "Wave Alliance Color") {
+      if (counter >= 30) {
+        counter = 0;
+        waveAllianceColor();
+      }
+    }
+    else if (counter >= 15) {
+      counter = 0;
+      pulseAllianceColor();
+    }
+    
+    // if (counter >= 15) {
+    //   counter = 0;
+
+    //   switch (chooser.getSelected()) {
+    //     case "Rainbow" :
+    //       rainbow();
+    //       break;
+    //     case "Pulse Alliance Color" :
+    //       pulseAllianceColor();
+    //       break;
+    //     case "Wave Alliance Color" :
+    //       waveAllianceColor();
+    //       break;
+    //     default :
+    //       pulseAllianceColor();
+    //       break;
+    //   }
+    // }
   }
 
 
@@ -141,10 +257,10 @@ public class LEDs extends SubsystemBase {
   }
 
 
-  int patchSize1 = 10;
+  int patchSize1 = 8;
   int brightness1 = 10;
   int distance1 = patchSize1;
-  int whiteBrightness = 10;
+  int whiteBrightness = 10; //10
 
   int m_position = 0;
   int m_direction = 1;
@@ -173,6 +289,7 @@ public class LEDs extends SubsystemBase {
     // Set all LEDs to white
     for (var i = 0; i < m_buffer.getLength(); i++) {
         m_buffer.setHSV(i, 0, 0, whiteBrightness);
+        // m_buffer.setRGB(i, 15, 15 , 10);
     }
     
     for (int i = -patchSize1; i <= patchSize1; i++) {

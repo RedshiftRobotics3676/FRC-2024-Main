@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.7220452902444284,
-        "y": 4.4499912076747234
+        "x": 0.8305816611633238,
+        "y": 4.519059807350385
       },
       "prevControl": {
-        "x": 2.0063939743264134,
-        "y": 3.276082335241594
+        "x": 2.114930345245309,
+        "y": 3.345150934917256
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,11 +54,11 @@
   "constraintZones": [
     {
       "name": "stop slowly",
-      "minWaypointRelativePos": 1.75,
+      "minWaypointRelativePos": 1.8,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 5.55,
-        "maxAcceleration": 2.5,
+        "maxAcceleration": 3.5,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
       }
@@ -85,7 +85,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.95,
-        "y": 4.1
+        "x": 2.6362321955413157,
+        "y": 6.758855825403959
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.679138742892872,
-        "y": 4.563746312108009
+        "x": 2.5276958246224197,
+        "y": 6.166839256755436
       },
       "isLocked": false,
-      "linkedName": "pickup third note"
+      "linkedName": "pickup 1"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.53
       },
       "prevControl": {
-        "x": 1.8926818545944788,
-        "y": 5.322794200973017
+        "x": 2.1626189406224983,
+        "y": 5.6438912877825755
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "start shooter",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shooter start"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.55,
     "maxAcceleration": 4.5,
@@ -40,12 +58,12 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "old",
+  "folder": "center speaker start",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 45.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

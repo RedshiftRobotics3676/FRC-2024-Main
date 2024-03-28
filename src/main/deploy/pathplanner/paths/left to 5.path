@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9193841464606024,
-        "y": 6.551650026376976
+        "x": 0.6431097477579587,
+        "y": 6.7095211113499165
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3814035289911204,
-        "y": 6.985770470544313
+        "x": 3.1051291302884767,
+        "y": 7.143641555517254
       },
       "isLocked": false,
       "linkedName": "left speaker start"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 7.875578828080734,
-        "y": 5.8609640296203676
+        "x": 7.964381313378012,
+        "y": 5.890564858052794
       },
       "prevControl": {
-        "x": 6.909653001791665,
-        "y": 6.119783074722888
+        "x": 6.998455487088943,
+        "y": 6.149383903155314
       },
       "nextControl": null,
       "isLocked": true,
@@ -51,7 +51,19 @@
       "rotateFast": true
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.85,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 5.55,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 360.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "intake",
@@ -73,7 +85,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

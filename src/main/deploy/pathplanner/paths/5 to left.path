@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.875578828080734,
-        "y": 5.8609640296203676
+        "x": 7.964381313378012,
+        "y": 5.890564858052794
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.977801349213531,
-        "y": 6.637421164927936
+        "x": 5.0666038345108095,
+        "y": 6.667021993360362
       },
       "isLocked": false,
       "linkedName": "new pickup 5"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.9193841464606024,
-        "y": 6.551650026376976
+        "x": 0.6431097477579587,
+        "y": 6.7095211113499165
       },
       "prevControl": {
-        "x": 1.0804014735289909,
-        "y": 6.830540217758362
+        "x": 0.8041270748263472,
+        "y": 6.988411302731302
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.5,
+      "minWaypointRelativePos": 1.6,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 5.55,
@@ -79,7 +79,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },

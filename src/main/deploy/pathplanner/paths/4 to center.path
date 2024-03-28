@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.942353117231199,
-        "y": 7.319272841113443
+        "x": 7.934780484945588,
+        "y": 7.35087239405248
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.038899976338431,
-        "y": 6.548893791432938
+        "x": 5.537113381919073,
+        "y": 7.084464938160646
       },
       "isLocked": false,
       "linkedName": "center pickup 4"
@@ -20,19 +20,25 @@
         "y": 5.53
       },
       "prevControl": {
-        "x": 2.8533049373791073,
-        "y": 5.515621031242063
+        "x": 2.3796916824602894,
+        "y": 5.939899572106838
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "speaker start"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 15.67,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.85,
+      "minWaypointRelativePos": 0.8,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 5.55,
@@ -63,19 +69,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 5.55,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 360.0,
     "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0.0,
-    "rotateFast": true
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "center speaker start",
   "previewStartingState": {
-    "rotation": 18.43,
+    "rotation": 15.67,
     "velocity": 0
   },
   "useDefaultConstraints": true

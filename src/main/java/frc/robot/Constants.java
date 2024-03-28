@@ -41,7 +41,7 @@ public final class Constants {
         /** Arm position all the way down */
         public static final double armDownPos = 0.000;
         /** Arm position for driveing and shooting in speaker */
-        public static final double armDefaultPos = 0.035;
+        public static final double armDefaultPos = 0.045; //0.035
         /** Arm position for shooting across the field */
         public static final double armMidPos = 0.075;
         /** Arm position for scoring in amp */
@@ -157,7 +157,7 @@ public final class Constants {
         public static final int kElevatorPort = 51;
 
         private static final MotorOutputConfigs kElevatorOutputConfigs = new MotorOutputConfigs()
-            .withInverted(InvertedValue.CounterClockwise_Positive)
+            .withInverted(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake);
         
         private static final Slot0Configs kElevatorGains = new Slot0Configs()
@@ -167,7 +167,7 @@ public final class Constants {
 
         public static final SoftwareLimitSwitchConfigs kElevatorSoftLimitSwitch = new SoftwareLimitSwitchConfigs()
             .withForwardSoftLimitEnable(true)
-            .withForwardSoftLimitThreshold(300)
+            .withForwardSoftLimitThreshold(315)
             .withReverseSoftLimitEnable(true)
             .withReverseSoftLimitThreshold(15);
 
@@ -178,11 +178,12 @@ public final class Constants {
             .withMotionMagicExpo_kV(0)
             .withMotionMagicJerk(0);
 
-        public static final TalonFXConfiguration kArmConfigs = new TalonFXConfiguration()
+        public static final TalonFXConfiguration kElevatorConfigs = new TalonFXConfiguration()
             .withMotorOutput(kElevatorOutputConfigs)
             .withSlot0(kElevatorGains)
             .withSoftwareLimitSwitch(kElevatorSoftLimitSwitch)
             .withMotionMagic(kElevatorMotionMagicConfigs);
+
 
         public static final MotionMagicVelocityVoltage motionMagicVelocity = new MotionMagicVelocityVoltage(0)
             .withOverrideBrakeDurNeutral(true)

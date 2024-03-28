@@ -5,7 +5,6 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
-// import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +18,7 @@ public class Elevator extends SubsystemBase {
   /** Creates a new Elavator. */
   public Elevator() {
     elevator = new TalonFX(ElevatorConstants.kElevatorPort);
+    elevator.getConfigurator().apply(ElevatorConstants.kElevatorConfigs);
   }
 
   // public Command up(double speed) {

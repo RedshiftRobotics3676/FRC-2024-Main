@@ -30,7 +30,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
+    CommandScheduler.getInstance().run();
+
+
     // m_robotContainer.leds.rainbow();
     // m_robotContainer.leds.pulseAllianceColor();
     // m_robotContainer.leds.setSolidRGB(0, 0, 0);
@@ -43,10 +45,14 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.leds.runFromChooser();
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    m_robotContainer.leds.runFromChooser();
+  }
 
   @Override
   public void disabledExit() {}
@@ -65,6 +71,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    m_robotContainer.leds.runFromChooser();
     SmartDashboard.putNumber("auton timer", autonTimer.get());
     // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
   }
@@ -76,6 +83,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.leds.solidAllianceColor();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
