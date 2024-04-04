@@ -94,6 +94,34 @@ public class Intake extends SubsystemBase {
                   () -> new IntakeOut(this)); // Runnable to stop the intake motor when the command is interupted
   }
 
+
+  // static double currentCurrent = 0;
+  /* static Timer timer = new Timer();
+
+  public Command intakeCurrent(double speed) {
+    return new FunctionalCommand(
+        () -> {
+            // Start the shooter motor at full speed
+            intakeMotor.set(ControlMode.PercentOutput, speed);
+            timer.restart();
+        },
+        () -> {
+
+            if (timer.hasElapsed(0.5) && intakeMotor.getSupplyCurrent() > 10) {
+
+            }
+            // currentCurrent = intakeMotor.getSupplyCurrent();
+        },
+        (interrupted) -> {
+
+        },
+        () -> {
+            return shooterMotor.getVelocity().getValue() >= (speed - 5); //FIXME changed this to 5 before comp thursday, was 10 when testing auton before but now shooter pids are tuned so it should work better this way
+        },
+        this // Subsytem requirement of the intake
+    );
+  } */
+
   public Command stop() {
     return runOnce(() -> intakeMotor.set(ControlMode.PercentOutput, 0)); // Runnable to stop the intake motor
   }
