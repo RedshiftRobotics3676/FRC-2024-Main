@@ -93,7 +93,7 @@ public class RobotContainer {
 
   
   SwerveRequest.ApplyChassisSpeeds applyChassisSpeeds = new SwerveRequest.ApplyChassisSpeeds();
-  SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
+  SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric().withDeadband(0.05).withRotationalDeadband(0.05).withDriveRequestType(DriveRequestType.OpenLoopVoltage);;
 
   private final SendableChooser<Command> autoChooser;
 
@@ -118,6 +118,12 @@ public class RobotContainer {
             .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
             .withRotationalRate(cubeInputs(-driver.getRightX()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
     ));
+
+    driver.axisGreaterThan(3, 0.15).whileTrue( // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(() -> robotCentric.withVelocityX(cubeInputs(-driver.getLeftY()) * MaxSpeed) // Drive forward with negative Y (forward)
+            .withVelocityY(cubeInputs(-driver.getLeftX()) * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(cubeInputs(-driver.getRightX()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+    ).repeatedly());
     /* drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(cubeInputs(-joystick.getRawAxis(1)) * getThrottle() * MaxSpeed) // Drive forward with negative Y (forward)
             .withVelocityY(cubeInputs(-joystick.getRawAxis(0)) * getThrottle() * MaxSpeed) // Drive left with negative X (left)
@@ -260,6 +266,10 @@ public class RobotContainer {
     Trigger elevatorIsDown = new Trigger(() -> elevator.getPos() < 16);
 
     secondary.povUp().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
+    secondary.povUpLeft().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
+    secondary.povUpRight().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
+    
+    secondary.povUp().and(elevatorIsDown).whileTrue(arm.setArmPosition(armHighPos));
     secondary.povLeft().and(elevatorIsDown).whileTrue(arm.setArmPosition(armMidPos));
     secondary.povRight().and(elevatorIsDown).whileTrue(arm.setArmPosition(armDefaultPos));
     secondary.povDown().whileTrue(arm.setArmPosition(armDownPos));
@@ -272,6 +282,9 @@ public class RobotContainer {
     // secondary.axisGreaterThan(3, 0.05).whileTrue(new RunCommand(() -> elevator.up2(secondary.getRightTriggerAxis()), elevator).repeatedly()).onFalse(new RunCommand(() -> elevator.stop2(), elevator));
     
     // secondary.back().onTrue(elevator.setSoftLimits(false)).onFalse(elevator.setSoftLimits(true));
+
+    // Trigger userButton = new Trigger(HALUtil::getFPGAButton);
+    // userButton.onTrue()
 
 /* //---------------------------------------------------------------------------------------------------------------------------------
 

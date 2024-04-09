@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7349016236494026,
-        "y": 6.413512827025654
+        "x": 2.6145766435609734,
+        "y": 6.336750216956936
       },
       "isLocked": false,
       "linkedName": "speaker start"
     },
     {
       "anchor": {
-        "x": 4.747757957054377,
-        "y": 7.331138508430864
+        "x": 4.461616615540925,
+        "y": 7.114065766593072
       },
       "prevControl": {
-        "x": 3.374419249388861,
-        "y": 7.283508264234372
+        "x": 3.2542093326795896,
+        "y": 6.790541960214921
       },
       "nextControl": {
-        "x": 6.454739063324282,
-        "y": 7.390340165295717
+        "x": 5.66902389840226,
+        "y": 7.4375895729712225
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.974248256188821,
-        "y": 7.439674879349759
+        "x": 8.05,
+        "y": 7.44
       },
       "prevControl": {
-        "x": 6.928352318243099,
-        "y": 7.390340165295715
+        "x": 7.050000000000001,
+        "y": 7.44
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,11 +48,11 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.7,
+      "minWaypointRelativePos": 1.9,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 5.55,
-        "maxAcceleration": 3.0,
+        "maxAcceleration": 4.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 360.0
       }

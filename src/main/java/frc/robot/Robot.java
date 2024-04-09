@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   private Timer autonTimer;
+  private int counter = 0;
 
   Robot(double period) {
     super(period);
@@ -46,12 +47,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    m_robotContainer.leds.runFromChooser();
+    // m_robotContainer.leds.runFromChooser();
   }
 
   @Override
   public void disabledPeriodic() {
-    m_robotContainer.leds.runFromChooser();
+    counter++;
+    if (counter >= 7) {
+      m_robotContainer.leds.pulseAllianceColor();
+      counter = 0;
+    }
   }
 
   @Override
@@ -79,11 +84,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousExit() {
     autonTimer.stop();
+    m_robotContainer.intake.stop();
+    m_robotContainer.intake.stopShooter();
   }
 
   @Override
   public void teleopInit() {
-    m_robotContainer.leds.solidAllianceColor();
+    // m_robotContainer.leds.solidAllianceColor();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -94,6 +101,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // m_robotContainer.drivetrain.setEstimatedPose(m_robotContainer.vision.getEstimatedGlobalPose());
+
+    m_robotContainer.leds.runFromChooser();
     
   }
 

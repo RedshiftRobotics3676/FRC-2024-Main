@@ -133,7 +133,7 @@ public final class Constants {
 
 
         private static final MagnetSensorConfigs kMagnetSensorConfigs = new MagnetSensorConfigs()
-            .withMagnetOffset(-0.0576171875)
+            .withMagnetOffset(-0.390380859375)
             .withSensorDirection(SensorDirectionValue.Clockwise_Positive) // was CounterClockwise_Positive
             .withAbsoluteSensorRange(AbsoluteSensorRangeValue.Signed_PlusMinusHalf);
 
