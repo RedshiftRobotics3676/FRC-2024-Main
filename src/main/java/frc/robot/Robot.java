@@ -84,6 +84,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousExit() {
     autonTimer.stop();
+    m_robotContainer.intake.stop();
+    m_robotContainer.intake.stopShooter();
   }
 
   @Override
